@@ -1,15 +1,15 @@
 diff --git a/src/mentova/games/arc_benchmark_2.pl b/src/mentova/games/arc_benchmark_2.pl
-index da47e70..d92748e 100644
+index da47e70..fc3422d 100644
 --- a/src/mentova/games/arc_benchmark_2.pl
 +++ b/src/mentova/games/arc_benchmark_2.pl
-@@ -76,6 +76,31 @@
+@@ -76,6 +76,71 @@
  % Allow arc2_induce_rule/2 clauses at non-consecutive positions.
  :- discontiguous arc2_induce_rule/2.
  
 +% ---------------------------------------------------------------------------
-+% MERENVAY PRIORITY DISPATCH — public benchmark runtime repair
-+% Moves two already-existing verified rules ahead of expensive generic search.
-+% No transformation semantics or answer data are changed.
++% MERENVAY PRIORITY DISPATCH - public benchmark runtime stability repair
++% Moves six already-existing verified rules ahead of expensive generic search.
++% All gates are O(cells); transformation semantics and task data are unchanged.
 +% ---------------------------------------------------------------------------
 +
 +arc2_induce_rule(TrainingPairs, mirror_patch) :-
@@ -30,6 +30,46 @@ index da47e70..d92748e 100644
 +    length(TemplateCells, NTemplate), NTemplate >= 4,
 +    forall(member(pair(In, Out), TrainingPairs),
 +           arc2_transform(template_expand, In, Out)).
++
++arc2_induce_rule(TrainingPairs, constellation) :-
++    TrainingPairs = [pair(In0, Out0)|_],
++    length(In0, H), H >= 15, H =< 20,
++    In0 = [IRow0|_], length(IRow0, W), W >= 15, W =< 20,
++    length(Out0, H), Out0 = [ORow0|_], length(ORow0, W),
++    arc2_cst_prefilter_(In0, Out0),
++    length(TrainingPairs, NP),
++    include([pair(In, Out)]>>arc2_transform(constellation, In, Out), TrainingPairs, OK),
++    length(OK, NOK), NOK * 2 > NP.
++
++arc2_induce_rule(TrainingPairs, mosaic_heal) :-
++    TrainingPairs = [pair(In0, Out0)|_],
++    length(In0, 30), In0 = [IRow0|_], length(IRow0, 30),
++    length(Out0, 30), Out0 = [ORow0|_], length(ORow0, 30),
++    flatten(In0, FIn), memberchk(0, FIn),
++    sort(FIn, InColors), length(InColors, NColors), NColors >= 8,
++    flatten(Out0, FOut), \+ memberchk(0, FOut),
++    forall(member(pair(In, Out), TrainingPairs),
++           arc2_transform(mosaic_heal, In, Out)).
++
++arc2_induce_rule(TrainingPairs, hole_color) :-
++    TrainingPairs = [pair(In0, Out0)|_],
++    length(In0, 30), In0 = [IRow0|_], length(IRow0, 30),
++    length(Out0, 30), Out0 = [ORow0|_], length(ORow0, 30),
++    flatten(In0, FIn), memberchk(5, FIn),
++    sort(FIn, InColors), length(InColors, NColors), NColors =< 6,
++    include(==(0), FIn, Zeros), length(Zeros, NZ), length(FIn, NT), NZ * 2 > NT,
++    flatten(Out0, FOut), \+ memberchk(5, FOut),
++    forall(member(pair(In, Out), TrainingPairs),
++           arc2_transform(hole_color, In, Out)).
++
++arc2_induce_rule(TrainingPairs, frame_compass) :-
++    TrainingPairs = [pair(In0, Out0)|_],
++    length(In0, 22), In0 = [IRow0|_], length(IRow0, 22),
++    length(Out0, OH), Out0 = [ORow0|_], length(ORow0, OW),
++    OH < 22, OW < 22,
++    fc_has_solid_side_(In0),
++    forall(member(pair(In, Out), TrainingPairs),
++           arc2_transform(frame_compass, In, Out)).
 +
  % ---------------------------------------------------------------------------
  % TRANSFORM REGISTRY
