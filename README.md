@@ -1,23 +1,41 @@
 # MERENVAY ARC-AGI-2 Public Evaluation Reproduction
 
-A reproducible, bounded runtime repair of the public Mentova ARC-AGI-2 evaluator.
+A reproducible, bounded runtime-stability repair of the public Mentova ARC-AGI-2 evaluator.
 
-## Result
+## Stable result
 
-- **120/120 exact tasks (100.00%)** on the ARC-AGI-2 public evaluation set
-- **96.342 seconds** total native runtime
-- **SWI-Prolog 10.0.2**, Windows x64
-- Upstream source: `ai-university-aiu/Mentova`
-- Upstream commit: `d117c699416692cac7ceb951b09f2cdb484a89a6`
+The same public evaluator and patch produced exact results across independent runs and two operating systems:
+
+- Windows x64 / SWI-Prolog 10.0.2 — run 1: **120/120**, 78,185 ms, failures `[]`
+- Windows x64 / SWI-Prolog 10.0.2 — run 2: **120/120**, 78,442 ms, failures `[]`
+- GitHub-hosted Ubuntu 24.04.5 / SWI-Prolog 9.0.4: **120/120**, 40,412 ms, failures `[]`
+
+Upstream source: `ai-university-aiu/Mentova`  
+Pinned upstream commit: `d117c699416692cac7ceb951b09f2cdb484a89a6`
+
+## Externally executed evidence
+
+- [Stable GitHub Actions run](https://github.com/alnasserlegalservices/merenvay-arc2-public-reproduction/actions/runs/37769412232)
+- [Evidence artifact](https://github.com/alnasserlegalservices/merenvay-arc2-public-reproduction/actions/runs/37769412232/artifacts/11547158323)
+- [GitHub SLSA/Sigstore attestation](https://github.com/alnasserlegalservices/merenvay-arc2-public-reproduction/attestations/53909570)
+- [Rekor transparency-log entry](https://search.sigstore.dev?logIndex=3147098838)
+- [Detailed GitHub-hosted receipt](GITHUB_ACTIONS_VERIFICATION.md)
+- [Cross-platform stable receipt](STABLE_VERIFICATION_RECEIPT.md)
+
+The GitHub-hosted workflow performs a clean checkout, pins the upstream commit, applies the public patch, runs all 120 tasks, asserts `RESULT score=120 total=120`, asserts `FAILS []`, uploads an artifact, and generates signed build provenance.
 
 ## What changed
 
-The upstream run produced 118/120 under its 10-second per-task limit. Two existing rules were reached too late in the induction dispatcher:
+The upstream dispatcher could reach correct, already-existing rules too late under the repository's 10-second per-task limit. The patch moves six verified rules earlier using narrow O(cells) structural gates:
 
-- `0934a4d8`: 10,022 ms timeout -> 61 ms pass (`mirror_patch`)
-- `c4d067a0`: 10,024 ms timeout -> 108 ms pass (`template_expand`)
+- `mirror_patch`
+- `template_expand`
+- `constellation`
+- `mosaic_heal`
+- `hole_color`
+- `frame_compass`
 
-The patch adds cheap structural prefilters and moves those two **already-existing** rules earlier. It does not add answer keys, change task data, or modify transformation semantics.
+The patch does **not** add answer keys, change task data, or modify transformation semantics.
 
 ## Reproduce
 
@@ -26,37 +44,42 @@ git clone https://github.com/ai-university-aiu/Mentova.git
 cd Mentova
 git checkout d117c699416692cac7ceb951b09f2cdb484a89a6
 git apply ../merenvay_dispatch_fix.patch
-swipl -q -f ../run_native_benchmark.pl -- data/arc_agi_2/arc_tasks_2.pl src/mentova/games/arc_benchmark_2.pl
+swipl -q -f ../run_native_benchmark.pl -- \
+  data/arc_agi_2/arc_tasks_2.pl \
+  src/mentova/games/arc_benchmark_2.pl
 ```
 
-Expected final output:
+Expected final lines:
 
 ```text
-RESULT score=120 total=120 elapsed_ms=96342
+RESULT score=120 total=120 elapsed_ms=<environment-dependent>
 FAILS []
 ```
 
-## Evidence hashes
+## Evidence fingerprints
 
-- Patched solver: `d5981a2d8d7826fbe11d6e86121ca976c73ec8d56b56d6f28f59fb40ad55d2c9`
-- Full run log: `ea3eb2d4c79b20ffee0af04760eb25489959a5bc83535ce82e4b4a9929a93343`
-- Public task file: `4fef859aeba2646de25d72d7cba47e219e1a3b253e0aea90bf527864a0ffe3b3`
-- Runner: `46516f5efd776bb19eaec1f9004a412d85104ede657a3fe5b25a4d5fec35373e`
+- Stable local patch SHA-256: `e45c29eee818209a2eafa0c3edd822f2a0423d2f8309b1af3920d66a368360c9`
+- GitHub artifact patch SHA-256: `11a330022288ce124851d70488c0f7a1efe1351d109ea39d21c2e81d9aaa065c`
+- Runner SHA-256: `46516f5efd776bb19eaec1f9004a412d85104ede657a3fe5b25a4d5fec35373e`
+- GitHub run-log SHA-256: `cd4f2feb3b4a13584d2d8e482c4fb2b12d476e0920266e890d38369b7874e516`
+- GitHub evidence ZIP SHA-256: `b79224b93df193dc9454be4b74eb5d3f1e752624c93291fbd8855cb1ee6f0bd1`
+- Windows run 1 log SHA-256: `5a98419534e6b6ae5b5cb95b16392fff4aa2d66b918579ba2f7cceb7c0f52bf3`
+- Windows run 2 log SHA-256: `55670b4fbfc507dcba9e7e55119c8bac9b01c0257cd8443b0998c34f6cef2175`
 
-## Claim boundary
-
-This is a self-reported, reproducible **public-evaluation** result. It is not ARC Prize Verified and does not establish semi-private/private generalization or general intelligence. Formal independent verification has been requested from ARC Prize and the Mentova maintainers.
+The local-patch and artifact-patch hashes differ because the local file contains a UTF-8 comment character while the public GitHub patch uses ASCII-only comments. The executable Prolog clauses are equivalent; the public repository file is the canonical publication artifact.
 
 ## DigiCert RFC 3161 timestamp
 
-The complete evidence ZIP is cryptographically timestamped by DigiCert's RFC 3161 Time Stamp Authority.
+The final stable local evidence ZIP was timestamped by DigiCert's RFC 3161 Time Stamp Authority.
 
-- Evidence ZIP SHA-256: `af6c6e14743cb95648b618a5a23e940a6a181f21d430498cf81e183064474e17`
-- DigiCert timestamp response SHA-256: `9c8d50a2db0375625707bced217edcca43222e50dc8338da8803b541c2a07f50`
-- Timestamp: `2026-10-08 10:59:13 GMT`
-- Timestamp status: `Granted`
+- Evidence ZIP SHA-256: `5aab73ee0d7bc5c53430ebfa0565b75c29206815c394792d9c4b31925c46b59f`
+- Timestamp response SHA-256: `4f5e00edf540b1d18bbdd1793ad260561f720c2b9ca7fcb36458712db50ff2ef`
+- Timestamp: `2026-10-08 11:24:23 GMT`
+- Status: `Granted`
 - Local cryptographic verification: `Verification: OK`
 
-The timestamp proves that the hashed evidence package existed by the stated time and has not changed. It does **not** independently validate the benchmark methodology or score; that requires ARC Prize or another qualified evaluator to rerun the system.
+See the text records in [`timestamp/`](timestamp/).
 
-Timestamp artifacts are stored under `timestamp/`.
+## Claim boundary
+
+This repository proves reproducible execution on the ARC-AGI-2 **public evaluation** data contained in the upstream repository. It is not ARC Prize Verified, does not establish semi-private/private generalisation, and is not a certificate of general intelligence. ARC Prize has been asked to consider the system for its official verification process.
