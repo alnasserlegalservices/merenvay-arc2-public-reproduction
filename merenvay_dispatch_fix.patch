@@ -1,0 +1,36 @@
+diff --git a/src/mentova/games/arc_benchmark_2.pl b/src/mentova/games/arc_benchmark_2.pl
+index da47e70..d92748e 100644
+--- a/src/mentova/games/arc_benchmark_2.pl
++++ b/src/mentova/games/arc_benchmark_2.pl
+@@ -76,6 +76,31 @@
+ % Allow arc2_induce_rule/2 clauses at non-consecutive positions.
+ :- discontiguous arc2_induce_rule/2.
+ 
++% ---------------------------------------------------------------------------
++% MERENVAY PRIORITY DISPATCH — public benchmark runtime repair
++% Moves two already-existing verified rules ahead of expensive generic search.
++% No transformation semantics or answer data are changed.
++% ---------------------------------------------------------------------------
++
++arc2_induce_rule(TrainingPairs, mirror_patch) :-
++    TrainingPairs = [pair(In0, Out0)|_],
++    mp_bbox8_(In0, R1, R2, C1, C2),
++    length(Out0, OH), OH =:= R2 - R1 + 1,
++    Out0 = [ORow0|_], length(ORow0, OW), OW =:= C2 - C1 + 1,
++    flatten(Out0, FlatOut), \+ memberchk(8, FlatOut),
++    forall(member(pair(In, Out), TrainingPairs),
++           arc2_transform(mirror_patch, In, Out)).
++
++arc2_induce_rule(TrainingPairs, template_expand) :-
++    TrainingPairs = [pair(In0, Out0)|_],
++    length(In0, H), H >= 20, In0 = [IRow0|_], length(IRow0, W), W >= 20,
++    length(Out0, H), Out0 = [ORow0|_], length(ORow0, W),
++    arc2_te_bg_(In0, BG),
++    arc2_te_templ_cells_(In0, BG, H, W, TemplateCells),
++    length(TemplateCells, NTemplate), NTemplate >= 4,
++    forall(member(pair(In, Out), TrainingPairs),
++           arc2_transform(template_expand, In, Out)).
++
+ % ---------------------------------------------------------------------------
+ % TRANSFORM REGISTRY
+ % arc2_named_rule(+RuleName) — enumerate all known transform names.
