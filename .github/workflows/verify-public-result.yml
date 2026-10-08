@@ -1,0 +1,73 @@
+name: Verify ARC-AGI-2 Public Result
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+  attestations: write
+
+jobs:
+  reproduce:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout evidence repository
+        uses: actions/checkout@v4
+
+      - name: Install SWI-Prolog
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y swi-prolog-nox
+          swipl --version
+
+      - name: Fetch pinned upstream source
+        run: |
+          git clone https://github.com/ai-university-aiu/Mentova.git upstream
+          git -C upstream checkout d117c699416692cac7ceb951b09f2cdb484a89a6
+          test "$(git -C upstream rev-parse HEAD)" = "d117c699416692cac7ceb951b09f2cdb484a89a6"
+
+      - name: Apply MERENVAY dispatch repair
+        run: |
+          cd upstream
+          git apply ../merenvay_dispatch_fix.patch
+          git diff --check
+          git diff --stat
+
+      - name: Execute full 120-task native regression
+        run: |
+          set -o pipefail
+          /usr/bin/time -v swipl -q -f run_native_benchmark.pl -- \
+            upstream/data/arc_agi_2/arc_tasks_2.pl \
+            upstream/src/mentova/games/arc_benchmark_2.pl \
+            2>&1 | tee github_actions_public_run.log
+          grep -E '^RESULT score=120 total=120 ' github_actions_public_run.log
+          grep -Fx 'FAILS []' github_actions_public_run.log
+
+      - name: Build evidence artifact
+        run: |
+          mkdir -p ci-evidence
+          cp github_actions_public_run.log ci-evidence/
+          cp merenvay_dispatch_fix.patch run_native_benchmark.pl ci-evidence/
+          git -C upstream rev-parse HEAD > ci-evidence/upstream_commit.txt
+          swipl --version > ci-evidence/swipl_version.txt
+          sha256sum ci-evidence/* | tee ci-evidence/SHA256SUMS.txt
+          zip -r MERENVAY_ARC2_GitHub_Actions_Evidence.zip ci-evidence
+          sha256sum MERENVAY_ARC2_GitHub_Actions_Evidence.zip
+
+      - name: Upload evidence artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: merenvay-arc2-public-verification
+          path: MERENVAY_ARC2_GitHub_Actions_Evidence.zip
+          if-no-files-found: error
+          retention-days: 90
+
+      - name: Attest evidence artifact provenance
+        uses: actions/attest-build-provenance@v3
+        with:
+          subject-path: MERENVAY_ARC2_GitHub_Actions_Evidence.zip
