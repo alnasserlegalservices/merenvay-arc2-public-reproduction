@@ -1,0 +1,37 @@
+{
+  "date": "2026-10-08",
+  "benchmark_scope": "ARC-AGI-2 public evaluation",
+  "upstream_commit": "d117c699416692cac7ceb951b09f2cdb484a89a6",
+  "stable_patch_sha256": "e45c29eee818209a2eafa0c3edd822f2a0423d2f8309b1af3920d66a368360c9",
+  "windows_results": [
+    {"score": "120/120", "elapsed_ms": 78185, "failures": []},
+    {"score": "120/120", "elapsed_ms": 78442, "failures": []}
+  ],
+  "github_result": {
+    "score": "120/120",
+    "elapsed_ms": 40412,
+    "failures": [],
+    "run_id": 37769412232,
+    "artifact_id": 11547158323,
+    "artifact_service_digest": "sha256:da6a5d98a745c6f5fcad6d5a7a01b54f2b4e97f3c27279e8c873281ba7ead37b",
+    "inner_evidence_zip_sha256": "b79224b93df193dc9454be4b74eb5d3f1e752624c93291fbd8855cb1ee6f0bd1",
+    "attestation_id": 53909570,
+    "rekor_log_index": 3147098838
+  },
+  "files": {
+    "merenvay_dispatch_fix.patch": "e45c29eee818209a2eafa0c3edd822f2a0423d2f8309b1af3920d66a368360c9",
+    "run_native_benchmark.pl": "46516f5efd776bb19eaec1f9004a412d85104ede657a3fe5b25a4d5fec35373e",
+    "STABLE_VERIFICATION_RECEIPT.md": "72196a4a7ef1147dfea2b5faec823bcafec25787a9b8c1e6556dd00b94ac6b60",
+    "windows_stable_full_run.log": "5a98419534e6b6ae5b5cb95b16392fff4aa2d66b918579ba2f7cceb7c0f52bf3",
+    "windows_stable_full_run_2.log": "55670b4fbfc507dcba9e7e55119c8bac9b01c0257cd8443b0998c34f6cef2175"
+  },
+  "digicert_timestamp": {
+    "evidence_zip_sha256": "5aab73ee0d7bc5c53430ebfa0565b75c29206815c394792d9c4b31925c46b59f",
+    "request_sha256": "2d5c47d6664f1b6feec60e5310a4d92c1c495a56f4336c5a1667aefdebb0d55c",
+    "response_sha256": "4f5e00edf540b1d18bbdd1793ad260561f720c2b9ca7fcb36458712db50ff2ef",
+    "time_gmt": "2026-10-08 11:24:23",
+    "status": "Granted",
+    "verification": "OK"
+  },
+  "claim_boundary": "Public evaluation reproduction only; not ARC Prize Verified or hidden-set evidence."
+}

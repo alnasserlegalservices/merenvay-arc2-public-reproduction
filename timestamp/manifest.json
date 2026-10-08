@@ -1,0 +1,11 @@
+{
+  "evidence_zip_sha256": "5aab73ee0d7bc5c53430ebfa0565b75c29206815c394792d9c4b31925c46b59f",
+  "timestamp_request_sha256": "2d5c47d6664f1b6feec60e5310a4d92c1c495a56f4336c5a1667aefdebb0d55c",
+  "timestamp_response_sha256": "4f5e00edf540b1d18bbdd1793ad260561f720c2b9ca7fcb36458712db50ff2ef",
+  "timestamp_server": "http://timestamp.digicert.com",
+  "timestamp_gmt": "2026-10-08 11:24:23",
+  "timestamp_status": "Granted",
+  "timestamp_verification": "Verification: OK",
+  "policy_oid": "2.16.840.1.114412.7.1",
+  "serial_number": "0x54040CBF0C63A936C065625C3F02379E"
+}
