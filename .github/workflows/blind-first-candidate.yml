@@ -1,0 +1,46 @@
+name: Blinded first-candidate diagnostic (public data only)
+
+on:
+  push:
+    branches:
+      - audit/blind-first-candidate-20261009
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  diagnostic:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Checkout review branch
+        uses: actions/checkout@v4
+
+      - name: Install SWI-Prolog
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y swi-prolog-nox
+          swipl --version
+
+      - name: Fetch exact frozen Mentova revision
+        run: |
+          git clone https://github.com/ai-university-aiu/Mentova.git upstream
+          git -C upstream checkout d117c699416692cac7ceb951b09f2cdb484a89a6
+          test "$(git -C upstream rev-parse HEAD)" = "d117c699416692cac7ceb951b09f2cdb484a89a6"
+          (cd upstream && git apply ../merenvay_dispatch_fix.patch && git diff --check)
+
+      - name: Run answer-isolated first-candidate test (not an ARC Prize score)
+        shell: bash
+        run: |
+          set -o pipefail
+          swipl -q -f run_blind_first_candidate.pl --             upstream/data/arc_agi_2/arc_tasks_2.pl             upstream/src/mentova/games/arc_benchmark_2.pl             2>&1 | tee blinded_diagnostic.log
+          grep '^BLIND_FIRST_CANDIDATE score=' blinded_diagnostic.log
+          grep '^SCOPE public-evaluation;' blinded_diagnostic.log
+
+      - name: Record interpretation and provenance
+        run: |
+          echo "This successful CI job proves only that the diagnostic finished; NOT that 120/120 predictions succeeded."
+          echo "Under the original scorer, expected outputs can influence candidate selection."
+          echo "The blinded-first-candidate result must be reported as a separate research diagnostic."
+          git rev-parse HEAD
