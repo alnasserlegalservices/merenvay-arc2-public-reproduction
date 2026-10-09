@@ -2,9 +2,11 @@
 
 A reproducible, bounded runtime-stability repair of the public Mentova ARC-AGI-2 evaluator.
 
-## Stable result
+> **Validity notice (9 October 2026): answer-conditioned scoring.** The pinned upstream Mentova scorer calls `arc2_induce_rule/2` and checks `Computed = TestOut` *inside candidate search*, allowing Prolog backtracking to select a candidate using the published expected answer. The `120/120` shown below is an authentic reproducible result of **that public-set scoring procedure**, but it is **not** evidence of 120 answer-blind predictions, unseen-task generalisation, a legal-reasoning ranking, or ARC Prize Verified status. GitHub's signed attestation authenticates the run and artifact provenance, **not the validity of the reasoning metric**. See [methodology finding and peer-review request](https://github.com/alnasserlegalservices/merenvay-arc2-public-reproduction/issues/1) and the [answer-isolated first-candidate diagnostic branch](https://github.com/alnasserlegalservices/merenvay-arc2-public-reproduction/tree/audit/blind-first-candidate-20261009). Neither constitutes an independent BSI audit.
 
-The same public evaluator and patch produced exact results across independent runs and two operating systems:
+## Reproducible result of the original public-set scorer
+
+The same original **answer-conditioned** public evaluator and patch reproduced the following scores across runs and two operating systems:
 
 - Windows x64 / SWI-Prolog 10.0.2 — run 1: **120/120**, 78,185 ms, failures `[]`
 - Windows x64 / SWI-Prolog 10.0.2 — run 2: **120/120**, 78,442 ms, failures `[]`
@@ -82,4 +84,4 @@ See the text records in [`timestamp/`](timestamp/).
 
 ## Claim boundary
 
-This repository proves reproducible execution on the ARC-AGI-2 **public evaluation** data contained in the upstream repository. It is not ARC Prize Verified, does not establish semi-private/private generalisation, and is not a certificate of general intelligence. ARC Prize has been asked to consider the system for its official verification process.
+This repository documents reproducible execution of an **answer-conditioned** scoring procedure on the ARC-AGI-2 public evaluation data in the upstream repository. Until the answer-conditioned rule-selection issue is removed and retested, it is not a valid blinded reasoning score. Even a corrected public-set score would not prove unseen-task generalisation because the upstream system was developed against that public corpus. The work is not ARC Prize Verified, not a global ranking, not a certificate of general intelligence, and not an independent BSI assessment. ARC Prize has been asked for guidance on the eligibility of the bounded runtime-repair method.
