@@ -2,7 +2,7 @@
 
 A reproducible, bounded runtime-stability repair of the public Mentova ARC-AGI-2 evaluator.
 
-> **Validity notice (9 October 2026): answer-conditioned scoring.** The pinned upstream Mentova scorer calls `arc2_induce_rule/2` and checks `Computed = TestOut` *inside candidate search*, allowing Prolog backtracking to select a candidate using the published expected answer. The `120/120` shown below is an authentic reproducible result of **that public-set scoring procedure**, but it is **not** evidence of 120 answer-blind predictions, unseen-task generalisation, a legal-reasoning ranking, or ARC Prize Verified status. GitHub's signed attestation authenticates the run and artifact provenance, **not the validity of the reasoning metric**. See [methodology finding and peer-review request](https://github.com/alnasserlegalservices/merenvay-arc2-public-reproduction/issues/1) and the [answer-isolated first-candidate diagnostic branch](https://github.com/alnasserlegalservices/merenvay-arc2-public-reproduction/tree/audit/blind-first-candidate-20261009). Neither constitutes an independent BSI audit.
+> **Methodology notice — updated 9 October 2026.** The pinned upstream Mentova scorer tests `Computed = TestOut` *inside candidate search*, so the **original** 120/120 run by itself cannot establish answer-independent prediction. We therefore ran a [separate answer-isolated first-candidate experiment](https://github.com/alnasserlegalservices/merenvay-arc2-public-reproduction/actions/runs/37907563655), which selected one rule and finalised its output **before** comparing against `TestOut`: **120/120 of 120 distinct public tasks**, 20,026 ms solver elapsed, with zero reported failures. This is a stronger check of the public-case execution but **not an unseen-task, leakage-free or independently certified score**: the upstream Mentova system was developed against the public evaluation tasks. GitHub's attestation documents artifact provenance, not generalisation. See [peer-review finding](https://github.com/alnasserlegalservices/merenvay-arc2-public-reproduction/issues/1). No ARC Prize Verified score, general-intelligence certificate, global ranking or BSI approval is claimed.
 
 ## Reproducible result of the original public-set scorer
 
@@ -14,6 +14,20 @@ The same original **answer-conditioned** public evaluator and patch reproduced t
 
 Upstream source: `ai-university-aiu/Mentova`  
 Pinned upstream commit: `d117c699416692cac7ceb951b09f2cdb484a89a6`
+
+## Separate answer-isolated diagnostic (9 October 2026)
+
+The [first-candidate runner](https://github.com/alnasserlegalservices/merenvay-arc2-public-reproduction/blob/audit/blind-first-candidate-20261009/run_blind_first_candidate.pl) has a different scoring procedure from the original evaluator. It calls `once(first_proposed_output(TrainingPairs, TestIn, Rule, Prediction))` before the grade function ever sees the expected output, then uses strict equality `==` to score the frozen prediction. It keeps the same pinned upstream repository, runtime patch and 10-second per-task limit.
+
+| Procedure | Corpus | Logged result | What it establishes |
+| --- | --- | --- | --- |
+| Upstream evaluator, expected output consulted within rule search | ARC-AGI-2 public evaluation (120 tasks) | 120/120 | Reproducibility of the original answer-conditioned scorer |
+| First candidate selected with no expected output passed to the predictor | Same publicly exposed 120 tasks | **120/120**, 20,026 ms; 120 unique task IDs; 0 failures | A separate answer-isolated public-task replay, not hidden-set generalisation |
+
+- [Answer-isolated CI execution and 120 per-task results](https://github.com/alnasserlegalservices/merenvay-arc2-public-reproduction/actions/runs/37907563655)
+- Frozen diagnostic commit: `5ffa9fd92ed4f5fa1a29509b78ffca563465fb12`
+- This first-candidate policy is a diagnostic heuristic, **not** a claim of optimal or independently validated general-purpose performance. The upstream rule library includes task-specific development against the public corpus.
+- Independent expert audit and ARC Prize Verified semi-private evaluation remain **not completed**.
 
 ## Externally executed evidence
 
@@ -84,4 +98,4 @@ See the text records in [`timestamp/`](timestamp/).
 
 ## Claim boundary
 
-This repository documents reproducible execution of an **answer-conditioned** scoring procedure on the ARC-AGI-2 public evaluation data in the upstream repository. Until the answer-conditioned rule-selection issue is removed and retested, it is not a valid blinded reasoning score. Even a corrected public-set score would not prove unseen-task generalisation because the upstream system was developed against that public corpus. The work is not ARC Prize Verified, not a global ranking, not a certificate of general intelligence, and not an independent BSI assessment. ARC Prize has been asked for guidance on the eligibility of the bounded runtime-repair method.
+This repository preserves the original **answer-conditioned** public scorer result and adds a separately completed **answer-isolated first-candidate** diagnostic on the same 120 known public tasks. Neither is a score on genuinely unseen tasks: the upstream code was developed against the public data. The result is not ARC Prize Verified, not a legal-reasoning result for MERENVAY's backend, not a global ranking, not a certificate of general intelligence, and not an independent BSI assessment. The public community submission awaits maintainer review.
