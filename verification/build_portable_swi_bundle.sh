@@ -18,7 +18,7 @@ if [[ -z "$SWI_HOME" || ! -d "$SWI_HOME" ]]; then
   exit 3
 fi
 
-cp -a "$SWI_HOME"/. "$OUT_DIR/swi/"
+cp -aL "$SWI_HOME"/. "$OUT_DIR/swi/"
 
 copy_dep() {
   local src="$1"
