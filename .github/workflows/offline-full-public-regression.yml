@@ -1,0 +1,88 @@
+name: Offline full public regression
+
+on:
+  push:
+    branches:
+      - verification/arc-agi2-generic-submission
+    paths:
+      - "verification/**"
+      - "merenvay_dispatch_fix.patch"
+      - ".github/workflows/offline-full-public-regression.yml"
+  workflow_dispatch:
+
+jobs:
+  offline-public:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y swi-prolog-nox util-linux
+          chmod +x verification/*.sh
+
+      - name: Build clean offline bundle
+        run: verification/make_offline_bundle.sh
+
+      - name: Fetch official public ARC data for external scoring only
+        run: git clone --depth 1 https://github.com/arcprize/ARC-AGI-2.git "$RUNNER_TEMP/ARC-AGI-2"
+
+      - name: Build challenge-only input with test outputs stripped
+        run: |
+          rm -rf /tmp/offline-public
+          mkdir -p /tmp/offline-public/input/merenvay-bundle /tmp/offline-public/input/competition /tmp/offline-public/working
+          tar -xzf dist/merenvay-arc2-offline-bundle.tar.gz -C /tmp/offline-public
+          cp -a /tmp/offline-public/package/. /tmp/offline-public/input/merenvay-bundle/
+          rm -rf /tmp/offline-public/package
+          python verification/strip_test_outputs.py \
+            "$RUNNER_TEMP/ARC-AGI-2/data/evaluation" \
+            /tmp/offline-public/input/competition/arc-agi_test_challenges.json
+
+      - name: Assert prediction input contains no test outputs
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path('/tmp/offline-public/input/competition/arc-agi_test_challenges.json')
+          data = json.loads(p.read_text())
+          assert len(data) == 120
+          assert sum(len(t['test']) for t in data.values()) == 167
+          assert all('output' not in test for t in data.values() for test in t['test'])
+          print('CHALLENGE_ONLY_INPUT_OK')
+          PY
+
+      - name: Run full public prediction with network disabled
+        run: |
+          sudo unshare -n -- bash -lc '
+            export KAGGLE_INPUT_ROOT=/tmp/offline-public/input
+            export KAGGLE_WORKING_ROOT=/tmp/offline-public/working
+            python /tmp/offline-public/input/merenvay-bundle/app/kaggle_entry.py
+          '
+
+      - name: Assert frozen submission hash
+        run: |
+          echo 'a9e169517a419a1ff9bb7613f2d44803a00825dc5820aa3058dcf4b331cf9199  /tmp/offline-public/working/submission.json' | sha256sum -c -
+
+      - name: Score only after offline prediction is complete
+        run: |
+          python verification/score_public_after_freeze.py \
+            --tasks "$RUNNER_TEMP/ARC-AGI-2/data/evaluation" \
+            --submission /tmp/offline-public/working/submission.json | tee /tmp/offline-public/public-score.txt
+          grep -F 'PUBLIC_OUTPUT_SCORE 152/167 = 91.017964%' /tmp/offline-public/public-score.txt
+          grep -F 'COMMUNITY_STYLE_TASK_AVG 112.833333/120 = 94.027778%' /tmp/offline-public/public-score.txt
+          grep -F 'PUBLIC_TASKS_ALL_TESTS_PASSED 105/120' /tmp/offline-public/public-score.txt
+
+      - name: Upload full offline regression evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: offline-full-public-regression-evidence
+          path: |
+            /tmp/offline-public/working/submission.json
+            /tmp/offline-public/public-score.txt
+          if-no-files-found: error
