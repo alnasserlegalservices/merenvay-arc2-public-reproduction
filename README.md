@@ -133,3 +133,18 @@ See the text records in [`timestamp/`](timestamp/).
 ## Claim boundary
 
 This repository preserves the original **answer-conditioned** public scorer result and adds a separately completed **answer-isolated first-candidate** diagnostic on the same 120 known public tasks. Neither is a score on genuinely unseen tasks: the upstream code was developed against the public data. The result is not ARC Prize Verified, not a legal-reasoning result for MERENVAY's backend, not a global ranking, not a certificate of general intelligence, and not an independent BSI assessment. The earlier community PR #61 is closed without merge; corrected resubmission is pending.
+
+## Responsible AI Use commitment
+
+MERENVAY's **Responsible AI Use Campaign Certificate of Commitment** records its organisation-wide declaration to all 10 Responsible AI Commitments.
+
+- Certificate holder: **MERENVAY — Organisation-wide**
+- Certificate number: **RAIUC-2026-1K430K1T6K**
+- Validity printed on the certificate: **10 October 2026 to 10 October 2027**
+- Signatory: **Stephen Whitelaw**, Founder, Responsible AI Use Campaign
+
+This is a record of declared commitment. No independent audit, technical-performance score, statutory approval, product endorsement, or legal immunity is claimed on the basis of this certificate. It does not validate the ARC-AGI evaluation results in this repository.
+
+[Certificate record and original image](certificates/README.md) · [Issuer certificate search](https://www.raiuc.org/certificate-search) · [Issuer governance and certification rules](https://www.raiuc.org/governance-certification)
+
+![MERENVAY Responsible AI Use Campaign Certificate of Commitment, certificate RAIUC-2026-1K430K1T6K, valid 10 October 2026 to 10 October 2027](certificates/RAIUC-certificate-RAIUC-2026-1K430K1T6K.jpg)
