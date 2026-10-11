@@ -2,15 +2,30 @@
 
 A reproducible, bounded runtime-stability repair of the public Mentova ARC-AGI-2 evaluator.
 
-> **Methodology notice — updated 9 October 2026.** The pinned upstream Mentova scorer tests `Computed = TestOut` *inside candidate search*, so the **original** 120/120 run by itself cannot establish answer-independent prediction. We therefore ran a [separate answer-isolated first-candidate experiment](https://github.com/alnasserlegalservices/merenvay-arc2-public-reproduction/actions/runs/37907563655), which selected one rule and finalised its output **before** comparing against `TestOut`: **120/120 of 120 distinct public tasks**, 20,026 ms solver elapsed, with zero reported failures. This is a stronger check of the public-case execution but **not an unseen-task, leakage-free or independently certified score**: the upstream Mentova system was developed against the public evaluation tasks. GitHub's attestation documents artifact provenance, not generalisation. See [peer-review finding](https://github.com/alnasserlegalservices/merenvay-arc2-public-reproduction/issues/1). No ARC Prize Verified score, general-intelligence certificate, global ranking or BSI approval is claimed.
+> **Methodology notice — updated 11 October 2026.** The pinned upstream Mentova scorer tests `Computed = TestOut` *inside candidate search*, so the **original** 120/120 run cannot establish answer-independent prediction and covered only one selected test input per public task ID. MERENVAY therefore built a generic answer-isolated submission path that never receives expected test outputs. On the current official ARC-AGI-2 public evaluation data, the frozen pipeline produced **152/167 exact test outputs = 91.017964%**, with **105/120 task IDs** having all test outputs correct, in **46.115 s** of GitHub-hosted generation time. A separate earlier first-candidate diagnostic remains preserved as **120/120 first test inputs**, 20,026 ms, zero failures. The upstream Mentova rule library was developed against these public tasks, so none of these results establishes unseen-task generalisation or ARC Prize verification. GitHub's attestation documents artifact provenance, not generalisation. See [peer-review finding](https://github.com/alnasserlegalservices/merenvay-arc2-public-reproduction/issues/1). No ARC Prize Verified score, official ranking, general-intelligence certificate, global ranking or BSI approval is claimed.
+
+## Current full public multi-test result — answer-isolated
+
+A generic submission path was added that serializes **training inputs, training outputs and test inputs only**. Expected test outputs are not passed into prediction. The generated submission is frozen before the separate public scorer reads expected outputs.
+
+Current official public-data regression:
+
+- **152/167 exact test outputs = 91.017964%**
+- **105/120 task IDs** with all of their test outputs correct
+- **120 task IDs / 167 test inputs**
+- generation elapsed: **46.115 s**
+- submission SHA-256: `a9e169517a419a1ff9bb7613f2d44803a00825dc5820aa3058dcf4b331cf9199`
+- GitHub Actions regression: https://github.com/alnasserlegalservices/merenvay-arc2-public-reproduction/actions/runs/38120350359
+
+This is the current defensible **self-reported public score** for the generic answer-isolated pipeline. It is not an ARC Prize Verified Semi-Private/Private score and is not an official leaderboard rank.
 
 ## Reproducible result of the original public-set scorer
 
-The same original **answer-conditioned** public evaluator and patch reproduced the following scores across runs and two operating systems:
+The same original **answer-conditioned, first-test-per-task** public evaluator and patch reproduced the following legacy execution results across runs and two operating systems:
 
-- Windows x64 / SWI-Prolog 10.0.2 — run 1: **120/120**, 78,185 ms, failures `[]`
-- Windows x64 / SWI-Prolog 10.0.2 — run 2: **120/120**, 78,442 ms, failures `[]`
-- GitHub-hosted Ubuntu 24.04.5 / SWI-Prolog 9.0.4: **120/120**, 40,412 ms, failures `[]`
+- Windows x64 / SWI-Prolog 10.0.2 — run 1: **120/120 first test inputs**, 78,185 ms, failures `[]`
+- Windows x64 / SWI-Prolog 10.0.2 — run 2: **120/120 first test inputs**, 78,442 ms, failures `[]`
+- GitHub-hosted Ubuntu 24.04.5 / SWI-Prolog 9.0.4: **120/120 first test inputs**, 40,412 ms, failures `[]`
 
 Upstream source: `ai-university-aiu/Mentova`  
 Pinned upstream commit: `d117c699416692cac7ceb951b09f2cdb484a89a6`
