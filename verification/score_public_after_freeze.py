@@ -40,6 +40,7 @@ def main():
     total_outputs = 0
     passed_outputs = 0
     passed_all_tasks = 0
+    task_fraction_sum = 0.0
     failed = []
 
     for task_id, task in sorted(tasks.items()):
@@ -52,6 +53,7 @@ def main():
             )
 
         task_ok = True
+        task_passed_outputs = 0
         for idx, (test, pred) in enumerate(zip(expected_tests, predictions)):
             expected = test.get("output")
             if expected is None:
@@ -60,15 +62,19 @@ def main():
             ok = pred["attempt_1"] == expected or pred["attempt_2"] == expected
             if ok:
                 passed_outputs += 1
+                task_passed_outputs += 1
             else:
                 task_ok = False
                 failed.append(f"{task_id}:{idx}")
 
         if task_ok:
             passed_all_tasks += 1
+        task_fraction_sum += task_passed_outputs / len(expected_tests) if expected_tests else 0.0
 
     pct = 100.0 * passed_outputs / total_outputs if total_outputs else 0.0
+    task_avg_pct = 100.0 * task_fraction_sum / len(tasks) if tasks else 0.0
     print(f"PUBLIC_OUTPUT_SCORE {passed_outputs}/{total_outputs} = {pct:.6f}%")
+    print(f"PUBLIC_TASK_AVERAGE_SCORE {task_avg_pct:.6f}%")
     print(f"PUBLIC_TASKS_ALL_TESTS_PASSED {passed_all_tasks}/{len(tasks)}")
     print("PUBLIC_FAILED_TEST_OUTPUTS", " ".join(failed) if failed else "[]")
 
