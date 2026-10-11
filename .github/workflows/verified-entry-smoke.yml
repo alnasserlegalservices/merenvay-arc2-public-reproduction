@@ -1,0 +1,53 @@
+name: ARC Verified entry smoke test
+
+on:
+  push:
+    branches:
+      - verification/arc-agi2-generic-submission
+    paths:
+      - "verification/**"
+      - "merenvay_dispatch_fix.patch"
+      - ".github/workflows/verified-entry-smoke.yml"
+  workflow_dispatch:
+
+jobs:
+  verified-entry:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install SWI-Prolog
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y swi-prolog-nox
+
+      - name: Run full answer-isolated entry path
+        run: |
+          python verification/verified_entry.py \
+            --challenges verification/tests/fixture_challenges.json \
+            --output verification/tests/verified_entry_submission.json \
+            --workdir "$RUNNER_TEMP/merenvay-verified" \
+            --skip-swipl-install
+
+      - name: Validate generated submission
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path("verification/tests/verified_entry_submission.json")
+          data = json.loads(p.read_text())
+          expected = {
+              "fixture_flip": [
+                  {
+                      "attempt_1": [[0,4],[6,5]],
+                      "attempt_2": [[0,4],[6,5]],
+                  }
+              ]
+          }
+          assert data == expected, (data, expected)
+          print("full verified entry smoke OK")
+          PY
