@@ -71,18 +71,21 @@ def candidate_challenge_files(root: Path) -> list[Path]:
     return found
 
 
+def validate_explicit_source(path: Path, label: str) -> Path:
+    if not path.exists():
+        raise FileNotFoundError(f"{label} does not exist: {path}")
+    if not (path.is_file() or path.is_dir()):
+        raise ValueError(f"{label} must be a JSON file or a directory of task JSON files: {path}")
+    return path
+
+
 def locate_challenges(explicit: Path | None, input_root: Path) -> Path:
     if explicit:
-        if not explicit.is_file():
-            raise FileNotFoundError(f"Challenge file not found: {explicit}")
-        return explicit
+        return validate_explicit_source(explicit, "Challenge source")
 
     env_path = os.environ.get("ARC_CHALLENGES")
     if env_path:
-        path = Path(env_path)
-        if not path.is_file():
-            raise FileNotFoundError(f"ARC_CHALLENGES does not exist: {path}")
-        return path
+        return validate_explicit_source(Path(env_path), "ARC_CHALLENGES")
 
     found = candidate_challenge_files(input_root)
     if not found:
@@ -159,7 +162,7 @@ def main() -> None:
         raise RuntimeError("swipl is required")
 
     challenges = locate_challenges(args.challenges, args.input_root)
-    print(f"Challenge file: {challenges}")
+    print(f"Challenge source: {challenges}")
 
     args.workdir.mkdir(parents=True, exist_ok=True)
     mentova = clone_mentova(args.workdir)
