@@ -39,7 +39,7 @@ These metrics are self-reported on the known public corpus.
 | Runtime checksum manifest | PASS | SHA-256 validation after extraction |
 | Public ARC corpus excluded from runtime bundle | PASS | Final bundle packages patched solver only, no `arc_tasks_2.pl` / solutions corpus |
 | Clean offline full-public reproduction | PASS | Run 38122094457: challenge-only input, network disabled, frozen SHA preserved, post-freeze score reconciled |
-| Official Kaggle CPU image compatibility | PENDING | `gcr.io/kaggle-images/python` compatibility run in progress |
+| Official Kaggle CPU image compatibility | PASS | Clean bundle ran successfully with `--network none` in `gcr.io/kaggle-images/python@sha256:81b1e7c4b4f0f2a7e0a33943c95754b1b7af6b30d65221633a284b6b601cd84a` (run 38122078200) |
 | ARC Prize Semi-Private evaluation | NOT RUN | External ARC verification required |
 | ARC Prize Private evaluation | NOT RUN | External competition/evaluator action required |
 
@@ -65,6 +65,14 @@ Latest clean-bundle CI artifact digest before final compatibility closure:
 
 Artifact archive size: **23,303,654 bytes**.
 
+Official Kaggle-image compatibility evidence artifact digest:
+
+`sha256:7c8cd26ff0094ce0e989d2def0e4145c9370a7c281bd08a9407e59c35acafcb3`
+
+Kaggle CPU image digest used for the successful clean-bundle test:
+
+`sha256:81b1e7c4b4f0f2a7e0a33943c95754b1b7af6b30d65221633a284b6b601cd84a`.
+
 Full offline public-regression evidence artifact digest:
 
 `sha256:80e9eb7e28d32dd07a8539b379f9fab405b7c41a34b95f5cdb00404b08a4ab35`
@@ -88,4 +96,4 @@ Until an authorised unseen evaluation occurs, do not use:
 - `world record`.
 
 Defensible wording remains:
-**MERENVAY currently has a self-reported 94.027778% ARC-AGI-2 public community-style submitted score on its corrected full multi-test pipeline; the Community PR remains under review and no ARC Prize hidden-set verification has occurred.**
+**MERENVAY currently has a self-reported 94.027778% ARC-AGI-2 public community-style submitted score on its corrected full multi-test pipeline; in the 11 Oct 2026 snapshot of explicit public-score entries across the Community main branch plus open PRs, it is second behind CCARC 96.81%. The Community PR remains under review and no ARC Prize hidden-set verification has occurred.**
