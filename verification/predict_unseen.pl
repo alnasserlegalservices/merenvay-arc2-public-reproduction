@@ -57,8 +57,8 @@ predict_test(Strategy, TestIn, Entry) :-
 
 /* Strategy selection happens once per task and only from training pairs. */
 choose_strategy(TrainingPairs, rule(Rule)) :-
+    task_timeout(Timeout),
     catch(
-        task_timeout(Timeout),
         call_with_time_limit(
             Timeout,
             once((arc_benchmark_2:arc2_induce_rule(TrainingPairs, Rule),
@@ -69,8 +69,8 @@ choose_strategy(TrainingPairs, rule(Rule)) :-
     ), !.
 
 choose_strategy(TrainingPairs, recolor(Mapping)) :-
+    task_timeout(Timeout),
     catch(
-        task_timeout(Timeout),
         call_with_time_limit(
             Timeout,
             once(arc_benchmark_2:arc2_induce_recolor(TrainingPairs, Mapping))
@@ -82,8 +82,8 @@ choose_strategy(TrainingPairs, recolor(Mapping)) :-
 choose_strategy(_TrainingPairs, identity).
 
 apply_strategy(rule(Rule), TestIn, Prediction) :-
-    ( catch(
-          task_timeout(Timeout),
+    ( task_timeout(Timeout),
+      catch(
           call_with_time_limit(
               Timeout,
               arc_benchmark_2:arc2_transform(Rule, TestIn, Candidate)
@@ -97,8 +97,8 @@ apply_strategy(rule(Rule), TestIn, Prediction) :-
     ).
 
 apply_strategy(recolor(Mapping), TestIn, Prediction) :-
-    ( catch(
-          task_timeout(Timeout),
+    ( task_timeout(Timeout),
+      catch(
           call_with_time_limit(
               Timeout,
               arc_benchmark_2:arc2_recolor_grid(Mapping, TestIn, Candidate)
