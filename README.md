@@ -1,5 +1,20 @@
 # MERENVAY ARC-AGI-2 Public Evaluation Reproduction
 
+## Submission status — 11 October 2026
+
+The earlier ARC Prize Community pull request **#61** was closed without merge after the head branch was force-reset from the submitting account. GitHub's public event log records the submitting account as the actor for both the closure and the same-second force-push; no maintainer rejection comment is recorded.
+
+The corrected submission content has been restored in the fork and preserved on the clean replacement branch `submission/merenvay-arc2-corrected`.
+
+Current defensible public metrics:
+- **94.027778%** community-style task-average
+- **152/167 = 91.017964%** output-weighted
+- **105/120** task IDs fully correct
+- **46.115 s** GitHub-hosted generation time
+
+The earlier **120/120** figure is retained only as a first-test-per-task legacy diagnostic, not as the full multi-test ARC-AGI-2 public score. Resubmission to the community repository is pending; no official ARC Prize ranking or Verified score is claimed.
+
+
 **MERENVAY founder and project maintainer:** Mohammed Mazen Al Nasser ([`@alnasserlegalservices`](https://github.com/alnasserlegalservices)). This identifies the founder and MERENVAY's documented engineering work; upstream Mentova authorship and licensing remain distinct and are credited below.
 
 A reproducible, bounded runtime-stability repair of the public Mentova ARC-AGI-2 evaluator.
@@ -116,4 +131,4 @@ See the text records in [`timestamp/`](timestamp/).
 
 ## Claim boundary
 
-This repository preserves the original **answer-conditioned** public scorer result and adds a separately completed **answer-isolated first-candidate** diagnostic on the same 120 known public tasks. Neither is a score on genuinely unseen tasks: the upstream code was developed against the public data. The result is not ARC Prize Verified, not a legal-reasoning result for MERENVAY's backend, not a global ranking, not a certificate of general intelligence, and not an independent BSI assessment. The public community submission awaits maintainer review.
+This repository preserves the original **answer-conditioned** public scorer result and adds a separately completed **answer-isolated first-candidate** diagnostic on the same 120 known public tasks. Neither is a score on genuinely unseen tasks: the upstream code was developed against the public data. The result is not ARC Prize Verified, not a legal-reasoning result for MERENVAY's backend, not a global ranking, not a certificate of general intelligence, and not an independent BSI assessment. The earlier community PR #61 is closed without merge; corrected resubmission is pending.
