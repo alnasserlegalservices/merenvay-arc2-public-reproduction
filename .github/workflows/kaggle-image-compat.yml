@@ -1,0 +1,76 @@
+name: Kaggle image compatibility gate
+
+on:
+  push:
+    branches:
+      - verification/arc-agi2-generic-submission
+    paths:
+      - "verification/**"
+      - "merenvay_dispatch_fix.patch"
+      - ".github/workflows/kaggle-image-compat.yml"
+  workflow_dispatch:
+
+jobs:
+  kaggle-image:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y swi-prolog-nox
+          chmod +x verification/*.sh
+
+      - name: Build offline bundle
+        run: verification/make_offline_bundle.sh
+
+      - name: Prepare simulated Kaggle mounts
+        run: |
+          rm -rf /tmp/kaggle-image-test
+          mkdir -p /tmp/kaggle-image-test/input/merenvay-bundle /tmp/kaggle-image-test/input/competition /tmp/kaggle-image-test/working
+          tar -xzf dist/merenvay-arc2-offline-bundle.tar.gz -C /tmp/kaggle-image-test
+          cp -a /tmp/kaggle-image-test/package/. /tmp/kaggle-image-test/input/merenvay-bundle/
+          rm -rf /tmp/kaggle-image-test/package
+          cp verification/tests/fixture_challenges.json /tmp/kaggle-image-test/input/competition/arc-agi_test_challenges.json
+
+      - name: Pull official Kaggle CPU notebook image
+        run: |
+          docker pull gcr.io/kaggle-images/python:latest
+          docker image inspect gcr.io/kaggle-images/python:latest --format '{{json .RepoDigests}}' | tee /tmp/kaggle-image-test/image-digest.txt
+
+      - name: Run bundle inside official Kaggle image with network disabled
+        run: |
+          docker run --rm --network none \
+            -e KAGGLE_INPUT_ROOT=/kaggle/input \
+            -e KAGGLE_WORKING_ROOT=/kaggle/working \
+            -v /tmp/kaggle-image-test/input:/kaggle/input:ro \
+            -v /tmp/kaggle-image-test/working:/kaggle/working \
+            gcr.io/kaggle-images/python:latest \
+            bash -lc 'python /kaggle/input/merenvay-bundle/app/kaggle_entry.py'
+
+      - name: Validate Kaggle-image output
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path('/tmp/kaggle-image-test/working/submission.json')
+          data = json.loads(p.read_text())
+          expected = {
+              'fixture_flip': [
+                  {'attempt_1': [[0, 4], [6, 5]], 'attempt_2': [[0, 4], [6, 5]]}
+              ]
+          }
+          assert data == expected, (data, expected)
+          print('KAGGLE_IMAGE_COMPAT_OK')
+          PY
+
+      - name: Upload compatibility evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: kaggle-image-compatibility-evidence
+          path: |
+            /tmp/kaggle-image-test/image-digest.txt
+            /tmp/kaggle-image-test/working/submission.json
+          if-no-files-found: error
