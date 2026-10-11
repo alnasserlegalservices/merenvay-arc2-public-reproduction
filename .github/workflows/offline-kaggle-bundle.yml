@@ -1,0 +1,89 @@
+name: Offline Kaggle bundle CI
+
+on:
+  push:
+    branches:
+      - verification/arc-agi2-generic-submission
+    paths:
+      - "verification/**"
+      - "merenvay_dispatch_fix.patch"
+      - ".github/workflows/offline-kaggle-bundle.yml"
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y swi-prolog-nox util-linux
+
+      - name: Prepare scripts
+        run: |
+          chmod +x verification/*.sh
+          python -m py_compile \
+            verification/challenges_to_prolog.py \
+            verification/build_submission.py \
+            verification/kaggle_entry.py \
+            verification/make_kaggle_notebook.py
+          python verification/make_kaggle_notebook.py
+
+      - name: Build offline bundle
+        run: verification/make_offline_bundle.sh
+
+      - name: Verify bundle checksums after extraction
+        run: |
+          rm -rf /tmp/merenvay-bundle
+          mkdir -p /tmp/merenvay-bundle
+          tar -xzf dist/merenvay-arc2-offline-bundle.tar.gz -C /tmp/merenvay-bundle
+          cd /tmp/merenvay-bundle/package
+          sha256sum -c SHA256SUMS
+          runtime/swi-portable/swipl-portable --version
+
+      - name: Simulate Kaggle input tree
+        run: |
+          rm -rf /tmp/kaggle-sim
+          mkdir -p /tmp/kaggle-sim/input/merenvay-bundle /tmp/kaggle-sim/input/competition /tmp/kaggle-sim/working
+          cp -a /tmp/merenvay-bundle/package/. /tmp/kaggle-sim/input/merenvay-bundle/
+          cp verification/tests/fixture_challenges.json /tmp/kaggle-sim/input/competition/arc-agi_test_challenges.json
+
+      - name: Run end-to-end with network namespace isolated
+        run: |
+          sudo unshare -n -- bash -lc '
+            export KAGGLE_INPUT_ROOT=/tmp/kaggle-sim/input
+            export KAGGLE_WORKING_ROOT=/tmp/kaggle-sim/working
+            python /tmp/kaggle-sim/input/merenvay-bundle/app/kaggle_entry.py
+          '
+
+      - name: Validate generated submission
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path('/tmp/kaggle-sim/working/submission.json')
+          data = json.loads(p.read_text())
+          expected = {
+              'fixture_flip': [
+                  {'attempt_1': [[0, 4], [6, 5]], 'attempt_2': [[0, 4], [6, 5]]}
+              ]
+          }
+          assert data == expected, (data, expected)
+          print('offline end-to-end submission OK')
+          PY
+
+      - name: Upload offline artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: merenvay-arc2-offline-verification-candidate
+          path: |
+            dist/merenvay-arc2-offline-bundle.tar.gz
+            dist/merenvay-arc2-offline-bundle.tar.gz.sha256
+            verification/kaggle_submission.ipynb
+          if-no-files-found: error
