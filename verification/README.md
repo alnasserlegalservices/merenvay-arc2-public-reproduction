@@ -20,16 +20,25 @@ Official policy:
 
 ## Current evidence
 
-Public-set engineering record:
-- public tasks: 120
-- reproduced public scorer: 120/120
-- GitHub-hosted public reproduction: 40.412 s
-- separate answer-isolated first-candidate diagnostic: 120/120, 0 failures,
+Current full public multi-test regression under the generic answer-isolated
+submission path:
+- **152/167 exact public test outputs = 91.017964%**
+- **105/120 task IDs** with every public test output correct
+- **120 task IDs / 167 test inputs** processed
+- GitHub-hosted submission generation: **46.115 s**
+- frozen submission SHA-256:
+  `a9e169517a419a1ff9bb7613f2d44803a00825dc5820aa3058dcf4b331cf9199`
+- evidence run:
+  https://github.com/alnasserlegalservices/merenvay-arc2-public-reproduction/actions/runs/38120350359
+
+Legacy engineering records remain preserved:
+- first-test-per-task GitHub reproduction: **120/120**, 40.412 s
+- separate first-candidate diagnostic: **120/120 first test inputs**, 0 failures,
   20.026 s
 
-Important limitation: the upstream Mentova rule library was developed against
-the known public corpus. These public results therefore do **not** establish
-unseen-task generalisation.
+The legacy 120/120 figures are **not** the full ARC multi-test public metric.
+The upstream Mentova rule library was developed against the known public corpus,
+so these public results do **not** establish unseen-task generalisation.
 
 ## What this branch adds
 
@@ -90,16 +99,22 @@ This branch does **not** claim ARC Verified readiness is complete.
    The rule library has public-corpus development exposure. The only meaningful
    test is a genuinely unseen Semi-Private/Private evaluation.
 
-2. **Kaggle runtime packaging is unresolved.**
-   The current solver depends on SWI-Prolog. A verification notebook must package
-   all runtime dependencies reproducibly and meet ARC/Kaggle execution limits.
+2. **External ARC/Kaggle execution is not yet completed.**
+   Offline packaging is now demonstrated in network-isolated CI: portable
+   SWI-Prolog, pinned Mentova, patch, answer-isolated predictor, and
+   `submission.json` generation all pass without network access. The latest
+   offline bundle CI artifact is 164,224,044 bytes with GitHub artifact digest
+   `sha256:9c04be2ff6840d7db73675f422e2e72c22720071296ea1a5a2243c8db713286b`.
+   This proves packaging/tooling, not acceptance by ARC Prize or Kaggle.
 
 3. **No ARC selection has occurred.**
    ARC Prize chooses which Community submissions to verify.
 
-4. **Public 100% must not be presented as an official hidden-set score.**
-   Until ARC runs a Semi-Private evaluation, the defensible language remains:
-   reproducible/self-reported public result and open Community submission.
+4. **The current full public score is 91.017964%, not 100%.**
+   Until ARC runs a Semi-Private evaluation, the defensible language is:
+   **91.018% self-reported ARC-AGI-2 public result under a generic
+   answer-isolated pipeline**. The Community Leaderboard is a showcase, not an
+   official ranking of self-reported scores.
 
 ## Promotion gate
 
@@ -107,6 +122,6 @@ Do not promote any claim to "ARC Prize Verified", "official #1", "hidden-set
 100%", "general intelligence", or equivalent unless ARC Prize publishes or
 directly confirms the corresponding verified result.
 
-The next technical milestone is not another public rerun. It is a fully
-packaged, answer-isolated Kaggle execution path that can accept unseen challenge
-JSON without code changes.
+The packaging milestone is now complete at CI level. The next material proof
+milestone is external execution by ARC Prize on a swapped unseen/Semi-Private
+challenge set, subject to ARC's discretionary selection and verification policy.
