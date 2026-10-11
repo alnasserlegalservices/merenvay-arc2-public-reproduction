@@ -8,6 +8,9 @@ import shutil
 import subprocess
 from pathlib import Path
 
+INPUT_ROOT = Path(os.environ.get("KAGGLE_INPUT_ROOT", "/kaggle/input"))
+WORKING_ROOT = Path(os.environ.get("KAGGLE_WORKING_ROOT", "/kaggle/working"))
+
 
 def find_challenges() -> Path:
     patterns = [
@@ -17,19 +20,18 @@ def find_challenges() -> Path:
         "**/*evaluation*challenges*.json",
     ]
     candidates = []
-    root = Path("/kaggle/input")
     for pattern in patterns:
-        candidates.extend(root.glob(pattern))
+        candidates.extend(INPUT_ROOT.glob(pattern))
         if candidates:
             break
     unique = sorted({p.resolve() for p in candidates if p.is_file()})
     if not unique:
-        raise FileNotFoundError("Could not locate ARC challenge JSON under /kaggle/input")
+        raise FileNotFoundError(f"Could not locate ARC challenge JSON under {INPUT_ROOT}")
     return unique[0]
 
 
 def locate_package() -> Path:
-    matches = sorted(Path("/kaggle/input").glob("**/OFFLINE_BUNDLE_README.md"))
+    matches = sorted(INPUT_ROOT.glob("**/OFFLINE_BUNDLE_README.md"))
     if not matches:
         raise FileNotFoundError("Attach the MERENVAY offline bundle dataset")
     return matches[0].parent
@@ -38,7 +40,8 @@ def locate_package() -> Path:
 def main() -> None:
     package = locate_package()
     challenges = find_challenges()
-    work = Path("/kaggle/working/merenvay_arc2")
+    work = WORKING_ROOT / "merenvay_arc2"
+    WORKING_ROOT.mkdir(parents=True, exist_ok=True)
     if work.exists():
         shutil.rmtree(work)
     shutil.copytree(package, work)
@@ -46,7 +49,7 @@ def main() -> None:
     swipl = work / "runtime" / "swi-portable" / "swipl-portable"
     app = work / "app"
     benchmark = app / "Mentova" / "src" / "mentova" / "games" / "arc_benchmark_2.pl"
-    output = Path("/kaggle/working/submission.json")
+    output = WORKING_ROOT / "submission.json"
 
     cmd = [
         "python",
