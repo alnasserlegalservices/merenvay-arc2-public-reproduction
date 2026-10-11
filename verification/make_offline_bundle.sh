@@ -34,7 +34,7 @@ cat > "$WORK/package/manifest.json" <<EOF
 EOF
 
 TMP_SUMS="$WORK/SHA256SUMS.tmp"
-find "$WORK/package" -type f ! -name SHA256SUMS -print0 | sort -z | xargs -0 sha256sum > "$TMP_SUMS"
+( cd "$WORK/package" && find . -type f ! -name SHA256SUMS -print0 | sort -z | xargs -0 sha256sum ) > "$TMP_SUMS"
 mv "$TMP_SUMS" "$WORK/package/SHA256SUMS"
 tar -C "$WORK" -czf "$BUNDLE" package
 sha256sum "$BUNDLE" > "$BUNDLE.sha256"
