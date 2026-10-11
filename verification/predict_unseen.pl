@@ -21,6 +21,14 @@
 :- initialization(main, main).
 :- use_module(library(http/json)).
 
+task_timeout(Timeout) :-
+    ( getenv('MERENVAY_TASK_TIMEOUT', Raw),
+      catch(atom_number(Raw, Parsed), _, fail),
+      number(Parsed), Parsed > 0
+    -> Timeout = Parsed
+    ;  Timeout = 10.0
+    ).
+
 main :-
     current_prolog_flag(argv, Args),
     ( Args = [TasksFile, BenchmarkFile | _] -> true
@@ -50,8 +58,9 @@ predict_test(Strategy, TestIn, Entry) :-
 /* Strategy selection happens once per task and only from training pairs. */
 choose_strategy(TrainingPairs, rule(Rule)) :-
     catch(
+        task_timeout(Timeout),
         call_with_time_limit(
-            10.0,
+            Timeout,
             once((arc_benchmark_2:arc2_induce_rule(TrainingPairs, Rule),
                   Rule \== recolor_auto))
         ),
@@ -61,8 +70,9 @@ choose_strategy(TrainingPairs, rule(Rule)) :-
 
 choose_strategy(TrainingPairs, recolor(Mapping)) :-
     catch(
+        task_timeout(Timeout),
         call_with_time_limit(
-            10.0,
+            Timeout,
             once(arc_benchmark_2:arc2_induce_recolor(TrainingPairs, Mapping))
         ),
         _Error,
@@ -73,8 +83,9 @@ choose_strategy(_TrainingPairs, identity).
 
 apply_strategy(rule(Rule), TestIn, Prediction) :-
     ( catch(
+          task_timeout(Timeout),
           call_with_time_limit(
-              10.0,
+              Timeout,
               arc_benchmark_2:arc2_transform(Rule, TestIn, Candidate)
           ),
           _Error,
@@ -87,8 +98,9 @@ apply_strategy(rule(Rule), TestIn, Prediction) :-
 
 apply_strategy(recolor(Mapping), TestIn, Prediction) :-
     ( catch(
+          task_timeout(Timeout),
           call_with_time_limit(
-              10.0,
+              Timeout,
               arc_benchmark_2:arc2_recolor_grid(Mapping, TestIn, Candidate)
           ),
           _Error,
