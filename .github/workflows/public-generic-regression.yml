@@ -1,0 +1,49 @@
+name: ARC public generic multi-test regression
+
+on:
+  push:
+    branches:
+      - verification/arc-agi2-generic-rescore
+    paths:
+      - "verification/**"
+      - "merenvay_dispatch_fix.patch"
+      - ".github/workflows/public-generic-regression.yml"
+  workflow_dispatch:
+
+jobs:
+  public-regression:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install SWI-Prolog
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y swi-prolog-nox
+
+      - name: Clone official ARC-AGI-2 public data
+        run: |
+          git clone --depth 1 https://github.com/arcprize/ARC-AGI-2.git "$RUNNER_TEMP/ARC-AGI-2"
+
+      - name: Generate frozen predictions for every public test input
+        run: |
+          python verification/verified_entry.py \
+            --challenges "$RUNNER_TEMP/ARC-AGI-2/data/evaluation" \
+            --output "$RUNNER_TEMP/public_submission.json" \
+            --workdir "$RUNNER_TEMP/verified-entry" \
+            --skip-swipl-install
+
+      - name: Score only after submission artifact exists
+        run: |
+          test -s "$RUNNER_TEMP/public_submission.json"
+          python verification/score_public_after_freeze.py \
+            --tasks "$RUNNER_TEMP/ARC-AGI-2/data/evaluation" \
+            --submission "$RUNNER_TEMP/public_submission.json"
+
+      - name: Record artifact hash
+        run: |
+          sha256sum "$RUNNER_TEMP/public_submission.json"
