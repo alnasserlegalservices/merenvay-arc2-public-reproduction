@@ -147,6 +147,7 @@ def main() -> None:
         handle.flush()
         os.fsync(handle.fileno())
         temp_output = Path(handle.name)
+        os.chmod(temp_output, 0o644)
 
     try:
         os.replace(temp_output, args.output)
