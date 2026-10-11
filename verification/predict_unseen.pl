@@ -11,10 +11,10 @@
      One JSON object per task on stdout:
        {"id":"...","predictions":[{"attempt_1":Grid,"attempt_2":Grid}, ...]}
 
-   Default verification mode duplicates attempt_1 into attempt_2. This keeps the
-   baseline deterministic and bounded. Experimental second-candidate diversity
-   is opt-in via MERENVAY_DIVERSE_SECOND=1 and is not part of the default
-   verification claim.
+   Verification baseline:
+   - choose one strategy per ARC task from training demonstrations only;
+   - apply that frozen strategy to every test input in that task;
+   - duplicate attempt_1 into attempt_2 for a deterministic bounded baseline.
 
    This is verification infrastructure, not proof of hidden-set performance.
 */
@@ -38,54 +38,65 @@ main :-
     halt(0).
 
 write_task_prediction(task(Id, TrainingPairs, TestInputs)) :-
-    maplist(predict_test(TrainingPairs), TestInputs, Entries),
+    choose_strategy(TrainingPairs, Strategy),
+    maplist(predict_test(Strategy), TestInputs, Entries),
     json_write_dict(current_output, _{id:Id, predictions:Entries}, [width(0)]),
     nl.
 
-predict_test(TrainingPairs, TestIn, Entry) :-
-    first_attempt(TrainingPairs, TestIn, A1),
-    second_attempt(TrainingPairs, TestIn, A1, A2),
-    Entry = _{attempt_1:A1, attempt_2:A2}.
+predict_test(Strategy, TestIn, Entry) :-
+    apply_strategy(Strategy, TestIn, A1),
+    Entry = _{attempt_1:A1, attempt_2:A1}.
 
-first_attempt(TrainingPairs, TestIn, Prediction) :-
-    ( catch(call_with_time_limit(
-                10.0,
-                once(candidate_output(TrainingPairs, TestIn, _Rule, Candidate))),
-            _Error,
-            fail),
+/* Strategy selection happens once per task and only from training pairs. */
+choose_strategy(TrainingPairs, rule(Rule)) :-
+    catch(
+        call_with_time_limit(
+            10.0,
+            once((arc_benchmark_2:arc2_induce_rule(TrainingPairs, Rule),
+                  Rule \== recolor_auto))
+        ),
+        _Error,
+        fail
+    ), !.
+
+choose_strategy(TrainingPairs, recolor(Mapping)) :-
+    catch(
+        call_with_time_limit(
+            10.0,
+            once(arc_benchmark_2:arc2_induce_recolor(TrainingPairs, Mapping))
+        ),
+        _Error,
+        fail
+    ), !.
+
+choose_strategy(_TrainingPairs, identity).
+
+apply_strategy(rule(Rule), TestIn, Prediction) :-
+    ( catch(
+          call_with_time_limit(
+              10.0,
+              arc_benchmark_2:arc2_transform(Rule, TestIn, Candidate)
+          ),
+          _Error,
+          fail
+      ),
       ground(Candidate)
     -> Prediction = Candidate
     ;  Prediction = TestIn
     ).
 
-/* Verification default: duplicate the frozen first answer. A second distinct
-   candidate is only attempted when explicitly enabled. This avoids spending
-   up to another 10 seconds per test input on unvalidated diversity. */
-second_attempt(TrainingPairs, TestIn, First, Prediction) :-
-    ( getenv('MERENVAY_DIVERSE_SECOND', '1')
-    -> bounded_second_attempt(TrainingPairs, TestIn, First, Prediction)
-    ;  Prediction = First
+apply_strategy(recolor(Mapping), TestIn, Prediction) :-
+    ( catch(
+          call_with_time_limit(
+              10.0,
+              arc_benchmark_2:arc2_recolor_grid(Mapping, TestIn, Candidate)
+          ),
+          _Error,
+          fail
+      ),
+      ground(Candidate)
+    -> Prediction = Candidate
+    ;  Prediction = TestIn
     ).
 
-bounded_second_attempt(TrainingPairs, TestIn, First, Prediction) :-
-    ( catch(call_with_time_limit(
-                2.0,
-                once((candidate_output(TrainingPairs, TestIn, _Rule2, Candidate2),
-                      ground(Candidate2),
-                      Candidate2 \== First))),
-            _Error,
-            fail)
-    -> Prediction = Candidate2
-    ;  Prediction = First
-    ).
-
-/* Candidate generation uses training demonstrations only. No expected test
-   output is passed into rule selection or output generation. */
-candidate_output(TrainingPairs, TestIn, Rule, Prediction) :-
-    arc_benchmark_2:arc2_induce_rule(TrainingPairs, Rule),
-    Rule \== recolor_auto,
-    arc_benchmark_2:arc2_transform(Rule, TestIn, Prediction).
-
-candidate_output(TrainingPairs, TestIn, recolor_auto, Prediction) :-
-    arc_benchmark_2:arc2_induce_recolor(TrainingPairs, Mapping),
-    arc_benchmark_2:arc2_recolor_grid(Mapping, TestIn, Prediction).
+apply_strategy(identity, TestIn, TestIn).
