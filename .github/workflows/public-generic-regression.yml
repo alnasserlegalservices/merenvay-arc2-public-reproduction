@@ -3,7 +3,7 @@ name: ARC public generic multi-test regression
 on:
   push:
     branches:
-      - verification/arc-agi2-generic-submission
+      - verification/arc-agi2-generic-rescore
     paths:
       - "verification/**"
       - "merenvay_dispatch_fix.patch"
