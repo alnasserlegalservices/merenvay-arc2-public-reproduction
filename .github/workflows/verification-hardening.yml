@@ -1,0 +1,37 @@
+name: Verification hardening gates
+
+on:
+  push:
+    branches:
+      - verification/arc-agi2-generic-submission
+    paths:
+      - "verification/**"
+      - ".github/workflows/verification-hardening.yml"
+  workflow_dispatch:
+
+jobs:
+  hardening:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install SWI-Prolog
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y swi-prolog-nox
+
+      - name: Syntax gates
+        run: |
+          python -m py_compile \
+            verification/challenges_to_prolog.py \
+            verification/build_submission.py \
+            verification/kaggle_entry.py \
+            verification/tests/hardening_test.py
+          swipl -q -t halt -f verification/predict_unseen.pl -- /dev/null /dev/null || true
+
+      - name: Invariance, failure containment, atomic-output gates
+        run: python verification/tests/hardening_test.py
