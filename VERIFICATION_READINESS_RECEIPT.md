@@ -38,7 +38,7 @@ These metrics are self-reported on the known public corpus.
 | Offline runtime bundle | PASS | Network-namespace-isolated end-to-end CI |
 | Runtime checksum manifest | PASS | SHA-256 validation after extraction |
 | Public ARC corpus excluded from runtime bundle | PASS | Final bundle packages patched solver only, no `arc_tasks_2.pl` / solutions corpus |
-| Clean offline full-public reproduction | PENDING | Full 120/167 isolated regression running |
+| Clean offline full-public reproduction | PASS | Run 38122094457: challenge-only input, network disabled, frozen SHA preserved, post-freeze score reconciled |
 | Official Kaggle CPU image compatibility | PENDING | `gcr.io/kaggle-images/python` compatibility run in progress |
 | ARC Prize Semi-Private evaluation | NOT RUN | External ARC verification required |
 | ARC Prize Private evaluation | NOT RUN | External competition/evaluator action required |
@@ -64,6 +64,12 @@ Latest clean-bundle CI artifact digest before final compatibility closure:
 `sha256:9b3cce4773df3641dc6863de7d49db8ce13aa890269f0ad3df266e16f8b577c6`
 
 Artifact archive size: **23,303,654 bytes**.
+
+Full offline public-regression evidence artifact digest:
+
+`sha256:80e9eb7e28d32dd07a8539b379f9fab405b7c41a34b95f5cdb00404b08a4ab35`
+
+The isolated run regenerated the exact frozen submission SHA `a9e169517a419a1ff9bb7613f2d44803a00825dc5820aa3058dcf4b331cf9199` and re-confirmed 94.027778% community-style / 91.017964% output-weighted / 105 of 120 all-test task passes.
 
 ## Methodological boundary
 
