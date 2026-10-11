@@ -11,6 +11,11 @@
      One JSON object per task on stdout:
        {"id":"...","predictions":[{"attempt_1":Grid,"attempt_2":Grid}, ...]}
 
+   Default verification mode duplicates attempt_1 into attempt_2. This keeps the
+   baseline deterministic and bounded. Experimental second-candidate diversity
+   is opt-in via MERENVAY_DIVERSE_SECOND=1 and is not part of the default
+   verification claim.
+
    This is verification infrastructure, not proof of hidden-set performance.
 */
 :- initialization(main, main).
@@ -53,9 +58,18 @@ first_attempt(TrainingPairs, TestIn, Prediction) :-
     ;  Prediction = TestIn
     ).
 
+/* Verification default: duplicate the frozen first answer. A second distinct
+   candidate is only attempted when explicitly enabled. This avoids spending
+   up to another 10 seconds per test input on unvalidated diversity. */
 second_attempt(TrainingPairs, TestIn, First, Prediction) :-
+    ( getenv('MERENVAY_DIVERSE_SECOND', '1')
+    -> bounded_second_attempt(TrainingPairs, TestIn, First, Prediction)
+    ;  Prediction = First
+    ).
+
+bounded_second_attempt(TrainingPairs, TestIn, First, Prediction) :-
     ( catch(call_with_time_limit(
-                10.0,
+                2.0,
                 once((candidate_output(TrainingPairs, TestIn, _Rule2, Candidate2),
                       ground(Candidate2),
                       Candidate2 \== First))),
