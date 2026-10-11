@@ -1,0 +1,36 @@
+name: Verification pipeline smoke test
+
+on:
+  push:
+    branches:
+      - verification/arc-agi2-generic-submission
+    paths:
+      - "verification/**"
+      - ".github/workflows/verification-pipeline-smoke.yml"
+  workflow_dispatch:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install SWI-Prolog
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y swi-prolog-nox
+
+      - name: Python syntax check
+        run: |
+          python -m py_compile             verification/challenges_to_prolog.py             verification/build_submission.py             verification/tests/check_fixture.py
+
+      - name: Build answer-isolated fixture submission
+        run: |
+          python verification/build_submission.py             --challenges verification/tests/fixture_challenges.json             --benchmark-file verification/tests/fixture_benchmark.pl             --output verification/tests/fixture_submission.json
+
+      - name: Validate fixture output
+        run: python verification/tests/check_fixture.py
