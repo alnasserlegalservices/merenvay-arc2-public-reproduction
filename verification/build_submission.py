@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import subprocess
 import sys
 import tempfile
@@ -131,11 +132,29 @@ def main() -> None:
         submission[task_id] = record["predictions"]
 
     validate_submission(challenges, submission)
-    args.output.write_text(
-        json.dumps(submission, separators=(",", ":")),
+
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    payload = json.dumps(submission, separators=(",", ":"))
+    with tempfile.NamedTemporaryFile(
+        mode="w",
         encoding="utf-8",
-    )
-    print(f"Wrote validated submission for {len(submission)} tasks to {args.output}")
+        dir=args.output.parent,
+        prefix=args.output.name + ".",
+        suffix=".tmp",
+        delete=False,
+    ) as handle:
+        handle.write(payload)
+        handle.flush()
+        os.fsync(handle.fileno())
+        temp_output = Path(handle.name)
+
+    try:
+        os.replace(temp_output, args.output)
+    finally:
+        if temp_output.exists():
+            temp_output.unlink()
+
+    print(f"Wrote validated submission atomically for {len(submission)} tasks to {args.output}")
 
 
 if __name__ == "__main__":
