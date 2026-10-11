@@ -10,7 +10,7 @@ Current defensible public metrics:
 - **94.027778%** community-style task-average
 - **152/167 = 91.017964%** output-weighted
 - **105/120** task IDs fully correct
-- **46.115 s** GitHub-hosted generation time
+- GitHub-hosted generation elapsed: **46.115 s** in run `38120350359` and **24.716 s** in independent rescore run `38124392038`; timing is environment/run dependent, not a speed record
 
 The earlier **120/120** figure is retained only as a first-test-per-task legacy diagnostic, not as the full multi-test ARC-AGI-2 public score. Resubmission to the community repository is pending; no official ARC Prize ranking or Verified score is claimed.
 
@@ -19,7 +19,7 @@ The earlier **120/120** figure is retained only as a first-test-per-task legacy 
 
 A reproducible, bounded runtime-stability repair of the public Mentova ARC-AGI-2 evaluator.
 
-> **Methodology notice — updated 11 October 2026.** The pinned upstream Mentova scorer tests `Computed = TestOut` *inside candidate search*, so the **original** 120/120 run cannot establish answer-independent prediction and covered only one selected test input per public task ID. MERENVAY therefore built a generic answer-isolated submission path that never receives expected test outputs. On the current official ARC-AGI-2 public evaluation data, the frozen pipeline produced a **94.027778% community-style task-average score**, alongside **152/167 exact test outputs = 91.017964%** on an output-weighted/Kaggle-style calculation, with **105/120 task IDs** having all test outputs correct, in **46.115 s** of GitHub-hosted generation time. A separate earlier first-candidate diagnostic remains preserved as **120/120 first test inputs**, 20,026 ms, zero failures. The upstream Mentova rule library was developed against these public tasks, so none of these results establishes unseen-task generalisation or ARC Prize verification. GitHub's attestation documents artifact provenance, not generalisation. See [peer-review finding](https://github.com/alnasserlegalservices/merenvay-arc2-public-reproduction/issues/1). No ARC Prize Verified score, official ranking, general-intelligence certificate, global ranking or BSI approval is claimed.
+> **Methodology notice — updated 11 October 2026.** The pinned upstream Mentova scorer tests `Computed = TestOut` *inside candidate search*, so the **original** 120/120 run cannot establish answer-independent prediction and covered only one selected test input per public task ID. MERENVAY therefore built a generic answer-isolated submission path that never receives expected test outputs. On the current official ARC-AGI-2 public evaluation data, the frozen pipeline produced a **94.027778% community-style task-average score**, alongside **152/167 exact test outputs = 91.017964%** on an output-weighted/Kaggle-style calculation, with **105/120 task IDs** having all test outputs correct. The same frozen submission SHA-256 was reproduced in two GitHub-hosted runs, with generation elapsed **46.115 s** and **24.716 s** respectively; timing is treated as environment/run dependent. A separate earlier first-candidate diagnostic remains preserved as **120/120 first test inputs**, 20,026 ms, zero failures. The upstream Mentova rule library was developed against these public tasks, so none of these results establishes unseen-task generalisation or ARC Prize verification. GitHub's attestation documents artifact provenance, not generalisation. See [peer-review finding](https://github.com/alnasserlegalservices/merenvay-arc2-public-reproduction/issues/1). No ARC Prize Verified score, official ranking, general-intelligence certificate, global ranking or BSI approval is claimed.
 
 ## Current full public multi-test result — answer-isolated
 
@@ -31,9 +31,10 @@ Current official public-data regression:
 - **152/167 exact test outputs = 91.017964%** — output-weighted/Kaggle-style
 - **105/120 task IDs** with all of their test outputs correct
 - **120 task IDs / 167 test inputs**
-- generation elapsed: **46.115 s**
-- submission SHA-256: `a9e169517a419a1ff9bb7613f2d44803a00825dc5820aa3058dcf4b331cf9199`
-- GitHub Actions regression: https://github.com/alnasserlegalservices/merenvay-arc2-public-reproduction/actions/runs/38120350359
+- GitHub-hosted generation elapsed: **46.115 s** in run `38120350359`; **24.716 s** in independent rescore run `38124392038`
+- submission SHA-256 in both runs: `a9e169517a419a1ff9bb7613f2d44803a00825dc5820aa3058dcf4b331cf9199`
+- original full multi-test regression: https://github.com/alnasserlegalservices/merenvay-arc2-public-reproduction/actions/runs/38120350359
+- independent rescore regression: https://github.com/alnasserlegalservices/merenvay-arc2-public-reproduction/actions/runs/38124392038
 
 These are the current defensible **self-reported public metrics** for the generic answer-isolated pipeline. The 94.027778% figure is the Community-style comparator; the 91.017964% figure is output-weighted. It is not an ARC Prize Verified Semi-Private/Private score and is not an official leaderboard rank.
 
