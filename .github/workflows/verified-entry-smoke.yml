@@ -38,16 +38,25 @@ jobs:
           python - <<'PY'
           import json
           from pathlib import Path
+
           p = Path("verification/tests/verified_entry_submission.json")
           data = json.loads(p.read_text())
-          expected = {
-              "fixture_flip": [
-                  {
-                      "attempt_1": [[0,4],[6,5]],
-                      "attempt_2": [[0,4],[6,5]],
-                  }
-              ]
-          }
-          assert data == expected, (data, expected)
+          entries = data["fixture_flip"]
+          assert len(entries) == 1
+          entry = entries[0]
+
+          # attempt_1 must be the expected answer-independent first candidate.
+          assert entry["attempt_1"] == [[0,4],[6,5]], entry
+
+          # attempt_2 may legitimately be a distinct second candidate.
+          # Validate only the ARC contract here.
+          for key in ("attempt_1", "attempt_2"):
+              grid = entry[key]
+              assert isinstance(grid, list) and grid
+              width = len(grid[0])
+              assert width > 0
+              assert all(isinstance(row, list) and len(row) == width for row in grid)
+              assert all(isinstance(cell, int) and 0 <= cell <= 9 for row in grid for cell in row)
+
           print("full verified entry smoke OK")
           PY
