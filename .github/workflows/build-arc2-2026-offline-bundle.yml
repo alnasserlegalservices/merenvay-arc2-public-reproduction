@@ -1,0 +1,52 @@
+name: Build ARC Prize 2026 offline bundle
+
+on:
+  push:
+    branches:
+      - verification/arc2-2026-kaggle-offline
+    paths:
+      - "verification/**"
+      - "merenvay_dispatch_fix.patch"
+      - ".github/workflows/build-arc2-2026-offline-bundle.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install SWI-Prolog
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y swi-prolog-nox
+
+      - name: Build offline bundle
+        run: |
+          bash verification/make_offline_bundle.sh
+
+      - name: Verify bundle
+        run: |
+          test -s dist/merenvay-arc2-offline-bundle.tar.gz
+          test -s dist/merenvay-arc2-offline-bundle.tar.gz.sha256
+          cat dist/merenvay-arc2-offline-bundle.tar.gz.sha256
+          tar -tzf dist/merenvay-arc2-offline-bundle.tar.gz | head -50
+          grep -q "package/app/kaggle_entry.py" <(tar -tzf dist/merenvay-arc2-offline-bundle.tar.gz)
+          grep -q "package/runtime/swi-portable/swipl-portable" <(tar -tzf dist/merenvay-arc2-offline-bundle.tar.gz)
+          grep -q "package/SHA256SUMS" <(tar -tzf dist/merenvay-arc2-offline-bundle.tar.gz)
+
+      - name: Upload Kaggle input bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: merenvay-arc2-2026-kaggle-offline-bundle
+          path: |
+            dist/merenvay-arc2-offline-bundle.tar.gz
+            dist/merenvay-arc2-offline-bundle.tar.gz.sha256
+            verification/notebooks/arc_agi2_2026_offline_submission.ipynb
+            verification/ARC_PRIZE_2026_READINESS.md
+          if-no-files-found: error
+          retention-days: 14
