@@ -27,13 +27,28 @@ def find_challenges() -> Path:
     unique = sorted({p.resolve() for p in candidates if p.is_file()})
     if not unique:
         raise FileNotFoundError(f"Could not locate ARC challenge JSON under {INPUT_ROOT}")
+    if len(unique) > 1:
+        raise RuntimeError(
+            "Multiple ARC challenge files found; set KAGGLE_INPUT_ROOT to the intended competition mount:\n"
+            + "\n".join(str(p) for p in unique)
+        )
     return unique[0]
 
 
 def locate_package() -> Path:
+    explicit = os.environ.get("MERENVAY_PACKAGE_ROOT")
+    if explicit:
+        package = Path(explicit).resolve()
+        marker = package / "OFFLINE_BUNDLE_README.md"
+        if not marker.is_file():
+            raise FileNotFoundError(f"MERENVAY_PACKAGE_ROOT is missing {marker}")
+        return package
+
     matches = sorted(INPUT_ROOT.glob("**/OFFLINE_BUNDLE_README.md"))
     if not matches:
-        raise FileNotFoundError("Attach the MERENVAY offline bundle dataset")
+        raise FileNotFoundError(
+            "Attach the MERENVAY offline bundle dataset or set MERENVAY_PACKAGE_ROOT"
+        )
     return matches[0].parent
 
 
