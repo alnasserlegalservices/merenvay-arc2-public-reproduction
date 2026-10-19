@@ -16,25 +16,25 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-24.04
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install SWI-Prolog
+      - name: Install SWI-Prolog and prepare scripts
         run: |
           sudo apt-get update
           sudo apt-get install -y swi-prolog-nox
+          chmod +x verification/*.sh
 
       - name: Build offline bundle
-        run: |
-          bash verification/make_offline_bundle.sh
+        run: verification/make_offline_bundle.sh
 
       - name: Verify bundle
         run: |
           test -s dist/merenvay-arc2-offline-bundle.tar.gz
           test -s dist/merenvay-arc2-offline-bundle.tar.gz.sha256
           cat dist/merenvay-arc2-offline-bundle.tar.gz.sha256
-          tar -tzf dist/merenvay-arc2-offline-bundle.tar.gz | head -50
           grep -q "package/app/kaggle_entry.py" <(tar -tzf dist/merenvay-arc2-offline-bundle.tar.gz)
           grep -q "package/runtime/swi-portable/swipl-portable" <(tar -tzf dist/merenvay-arc2-offline-bundle.tar.gz)
           grep -q "package/SHA256SUMS" <(tar -tzf dist/merenvay-arc2-offline-bundle.tar.gz)
