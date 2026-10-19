@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   build:
@@ -39,7 +39,7 @@ jobs:
           grep -q "package/runtime/swi-portable/swipl-portable" <(tar -tzf dist/merenvay-arc2-offline-bundle.tar.gz)
           grep -q "package/SHA256SUMS" <(tar -tzf dist/merenvay-arc2-offline-bundle.tar.gz)
 
-      - name: Upload Kaggle input bundle
+      - name: Upload workflow artifact
         uses: actions/upload-artifact@v4
         with:
           name: merenvay-arc2-2026-kaggle-offline-bundle
@@ -50,3 +50,13 @@ jobs:
             verification/ARC_PRIZE_2026_READINESS.md
           if-no-files-found: error
           retention-days: 14
+
+      - name: Publish technical candidate prerelease
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="arc2-2026-kaggle-candidate-20261019"
+          if ! gh release view "$TAG" >/dev/null 2>&1; then
+            gh release create "$TAG"               --target "$GITHUB_SHA"               --prerelease               --title "ARC-AGI-2 2026 Kaggle candidate — technical package"               --notes-file verification/ARC_PRIZE_2026_READINESS.md
+          fi
+          gh release upload "$TAG"             dist/merenvay-arc2-offline-bundle.tar.gz             dist/merenvay-arc2-offline-bundle.tar.gz.sha256             verification/notebooks/arc_agi2_2026_offline_submission.ipynb             verification/ARC_PRIZE_2026_READINESS.md             --clobber
