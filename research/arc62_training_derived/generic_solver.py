@@ -184,18 +184,32 @@ def solve_task(train:list[dict],test_inputs:list[Any],max_candidates:int=256):
     programs,_=fit_programs(train,max_candidates=max_candidates)
     if type(test_inputs) is not list or not test_inputs:raise ValueError('Test input list required')
     tests=[validate_grid(x) for x in test_inputs]
-    results=[]
-    for g in tests:
-        selected=[]
-        for p in programs:
-            try:res=p.apply(g)
-            except ValueError:continue
-            if res not in selected:selected.append(res)
-            if len(selected)==2:break
-        if not selected:selected=[g]  # Explicitly unverified fallback, never claim success.
-        a=as_list(selected[0]);b=as_list(selected[1] if len(selected)>1 else selected[0])
-        results.append({'attempt_1':a,'attempt_2':b})
-    return results
+    # Freeze program choice at TASK level. A candidate must be executable on
+    # every test input; per-grid replacement would silently change strategy.
+    selected_programs=[]
+    seen_predictions=set()
+    for p in programs:
+        try:
+            predicted=tuple(p.apply(g) for g in tests)
+        except ValueError:
+            continue
+        if predicted in seen_predictions:
+            continue
+        seen_predictions.add(predicted)
+        selected_programs.append(predicted)
+        if len(selected_programs)==2:
+            break
+    # If no training-consistent program handles every test grid, explicitly
+    # fall back across the whole task rather than mixing solver strategies.
+    if not selected_programs:
+        selected_programs=[tuple(tests)]
+    if len(selected_programs)==1:
+        selected_programs.append(selected_programs[0])
+    return [
+        {'attempt_1':as_list(selected_programs[0][i]),
+         'attempt_2':as_list(selected_programs[1][i])}
+        for i in range(len(tests))
+    ]
 
 
 def solve_challenges(challenges:dict[str,dict])->dict[str,list[dict]]:
