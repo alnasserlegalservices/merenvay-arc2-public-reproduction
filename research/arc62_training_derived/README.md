@@ -12,7 +12,7 @@ From this directory:
 
     python -B -m unittest discover -s tests -v
 
-15 synthetic unit tests check operators, multi-test support, task-ID independence, training consistency, absence of test labels, invalid grids and explicit fallback. Passing those tests demonstrates mechanics within this deliberately small grammar and does **not** establish hidden or public ARC-AGI-2 accuracy. No cherry-picked public ARC task score is claimed.
+15 original synthetic unit tests check operators, multi-test support, task-ID independence, training consistency, absence of test labels, invalid grids and explicit fallback. Three additional regression tests address task-level strategy freezing, whole-task fallback and deduplication of candidate output sequences. The added tests are committed but their execution is not yet independently confirmed. Passing those tests demonstrates mechanics within this deliberately small grammar and does **not** establish hidden or public ARC-AGI-2 accuracy. No cherry-picked public ARC task score is claimed.
 
 ## Run on challenge-only JSON
 
@@ -25,3 +25,7 @@ Task IDs are used only as output keys. The input must contain train pairs and te
 The previous public Mentova reproduction was based on solution-informed public tasks. Its 94.027778% public task-average and 152/167 output score are **not inherited by this new method**. This prototype is submitted for technical inspection as a *different* answer-isolated generic baseline; it has no independent ARC score or claim of novelty. It is not yet substituted for the PR #62 submission's upstream rule set. Maintainer input is needed on whether a method with much lower likely coverage is eligible as a separate entry.
 
 The private MERENVAY multi-jurisdiction legal engine, 20-year archive, client information and isolated Hazem vault are not accessed or bundled. No licence to those assets is granted or implied.
+
+## Task-level strategy selection (3 November revision)
+
+Candidate programs are fitted to visible training demonstrations only. The same selected first and second program must apply to **all** test inputs of a task; a program that fails on any test grid is excluded globally. If none can handle all grids, the baseline returns an explicitly unverified identity fallback for every test input. The grammar and scoring claims are unchanged. No post-change ARC public or hidden score is claimed.
