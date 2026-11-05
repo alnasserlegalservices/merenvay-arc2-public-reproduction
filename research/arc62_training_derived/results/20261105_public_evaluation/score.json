@@ -1,0 +1,1150 @@
+{
+  "all_tests_correct_tasks": 0,
+  "challenge_only_sha256": "8cade36130fdf1fa8fbab00cfcdfb5be8e74acbf04140f6fe18c5f502f0639be",
+  "correct_outputs": 0,
+  "dataset_commit": "f3283f727488ad98fe575ea6a5ac981e4a188e49",
+  "failures": [],
+  "manifest_sha256": "d5f3bb03cbcbad6a2cc76376e9c4181a881e36376a6bea7e6f4589c915ccbba1",
+  "match_rule": "Exact dimensions and all integer cells; either of at most two predictions may match",
+  "max_attempts_per_test": 2,
+  "metric_definition": "task_mean_percent = 100 * mean(correct test outputs / test outputs for each task)",
+  "output_weighted_fraction_exact": "0",
+  "output_weighted_percent": 0.0,
+  "per_task": {
+    "0934a4d8": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "135a2760": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "136b0064": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "13e47133": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false,
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 2
+    },
+    "142ca369": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false,
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 2
+    },
+    "16b78196": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "16de56c4": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false,
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 2
+    },
+    "1818057f": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "195c6913": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false,
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 2
+    },
+    "1ae2feb7": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false,
+        false,
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 3
+    },
+    "20270e3b": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false,
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 2
+    },
+    "20a9e565": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false,
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 2
+    },
+    "21897d95": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false,
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 2
+    },
+    "221dfab4": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false,
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 2
+    },
+    "247ef758": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false,
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 2
+    },
+    "269e22fb": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false,
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 2
+    },
+    "271d71e2": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "28a6681f": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "291dc1e1": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "2b83f449": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "2ba387bc": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "2c181942": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "2d0172a1": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false,
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 2
+    },
+    "31f7f899": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "332f06d7": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "35ab12c3": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "36a08778": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false,
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 2
+    },
+    "38007db0": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false,
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 2
+    },
+    "3a25b0d8": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false,
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 2
+    },
+    "3dc255db": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "3e6067c3": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false,
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 2
+    },
+    "409aa875": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "446ef5d2": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false,
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 2
+    },
+    "45a5af55": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "4a21e3da": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "4c3d4a41": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false,
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 2
+    },
+    "4c416de3": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "4c7dc4dd": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false,
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 2
+    },
+    "4e34c42c": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false,
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 2
+    },
+    "53fb4810": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "5545f144": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "581f7754": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false,
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 2
+    },
+    "58490d8a": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "58f5dbd5": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "5961cc34": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "5dbc8537": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false,
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 2
+    },
+    "62593bfd": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false,
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 2
+    },
+    "64efde09": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "65b59efc": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false,
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 2
+    },
+    "67e490f4": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "6e453dd6": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "6e4f6532": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false,
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 2
+    },
+    "6ffbe589": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "71e489b6": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false,
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 2
+    },
+    "7491f3cf": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "7666fa5d": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "78332cb0": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false,
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 2
+    },
+    "7b0280bc": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "7b3084d4": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "7b5033c1": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "7b80bb43": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "7c66cb00": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "7ed72f31": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false,
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 2
+    },
+    "800d221b": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "80a900e0": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "8698868d": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "88bcf3b4": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false,
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 2
+    },
+    "88e364bc": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false,
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 2
+    },
+    "89565ca0": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "898e7135": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "8b7bacbf": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false,
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 2
+    },
+    "8b9c3697": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "8e5c0c38": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false,
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 2
+    },
+    "8f215267": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "8f3a5a89": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "9385bd28": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false,
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 2
+    },
+    "97d7923e": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "981571dc": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "9aaea919": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "9bbf930d": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "a251c730": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "a25697e4": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false,
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 2
+    },
+    "a32d8b75": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false,
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 2
+    },
+    "a395ee82": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "a47bf94d": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "a6f40cea": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "aa4ec2a5": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "abc82100": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "b0039139": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false,
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 2
+    },
+    "b10624e5": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "b5ca7ac4": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "b6f77b65": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false,
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 2
+    },
+    "b99e7126": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "b9e38dc0": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "bf45cf4b": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "c4d067a0": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "c7f57c3e": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "cb2d8a2c": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false,
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 2
+    },
+    "cbebaa4b": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false,
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 2
+    },
+    "d35bdbdc": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false,
+        false,
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 3
+    },
+    "d59b0160": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "d8e07eb2": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false,
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 2
+    },
+    "da515329": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "db0c5428": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "db695cfb": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "dbff022c": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "dd6b8c4b": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false,
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 2
+    },
+    "de809cff": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "dfadab01": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "e12f9a14": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false,
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 2
+    },
+    "e3721c99": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false,
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 2
+    },
+    "e376de54": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "e8686506": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "e87109e9": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "edb79dae": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "eee78d87": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "f560132c": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "f931b4a8": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false,
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 2
+    },
+    "faa9f03d": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    },
+    "fc7cae8d": {
+      "all_tests_correct": false,
+      "correct_by_test": [
+        false
+      ],
+      "correct_outputs": 0,
+      "fraction": "0",
+      "test_outputs": 1
+    }
+  },
+  "predictions_sha256": "d3bb5745077d6c638b626ad1220e7eab31d25c89e771dc1256c6b0fbada2de83",
+  "scoring_finished_utc": "2026-11-05T18:01:59.045490+00:00",
+  "scoring_started_utc": "2026-11-05T18:01:58.906680+00:00",
+  "source_module_sha256": "37084696d0040d26ce08fc3d18e0cea20f78436152abb4ba59b9a24add01e769",
+  "task_count": 120,
+  "task_mean_fraction_exact": "0",
+  "task_mean_percent": 0.0,
+  "test_output_count": 167
+}

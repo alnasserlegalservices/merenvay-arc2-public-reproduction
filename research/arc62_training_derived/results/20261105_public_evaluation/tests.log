@@ -1,0 +1,30 @@
+test_exact_match_requires_dimensions_and_strict_integer_colors (test_evaluate_public.PublicEvaluationTests.test_exact_match_requires_dimensions_and_strict_integer_colors) ... ok
+test_mismatched_prediction_test_counts_rejected (test_evaluate_public.PublicEvaluationTests.test_mismatched_prediction_test_counts_rejected) ... ok
+test_missing_answer_tasks_or_test_records_rejected (test_evaluate_public.PublicEvaluationTests.test_missing_answer_tasks_or_test_records_rejected) ... ok
+test_missing_or_extra_prediction_task_is_rejected (test_evaluate_public.PublicEvaluationTests.test_missing_or_extra_prediction_task_is_rejected) ... ok
+test_projection_contains_training_outputs_but_no_test_answers (test_evaluate_public.PublicEvaluationTests.test_projection_contains_training_outputs_but_no_test_answers) ... ok
+test_second_attempt_counts_but_third_attempt_is_rejected (test_evaluate_public.PublicEvaluationTests.test_second_attempt_counts_but_third_attempt_is_rejected) ... ok
+test_unequal_test_counts_distinguish_task_mean_and_output_weighted (test_evaluate_public.PublicEvaluationTests.test_unequal_test_counts_distinguish_task_mean_and_output_weighted) ... ok
+test_color_map (test_solver.GenericTrainingDerivedTests.test_color_map) ... ok
+test_conflicting_training_demonstrations_yield_explicit_unverified_fallback (test_solver.GenericTrainingDerivedTests.test_conflicting_training_demonstrations_yield_explicit_unverified_fallback) ... ok
+test_crop_nonzero (test_solver.GenericTrainingDerivedTests.test_crop_nonzero) ... ok
+test_does_not_allow_any_output_template_witness_into_predictor (test_solver.GenericTrainingDerivedTests.test_does_not_allow_any_output_template_witness_into_predictor) ... ok
+test_double_scale (test_solver.GenericTrainingDerivedTests.test_double_scale) ... ok
+test_eligible_predictions_max_two (test_solver.GenericTrainingDerivedTests.test_eligible_predictions_max_two) ... ok
+test_empty_train_invalid (test_solver.GenericTrainingDerivedTests.test_empty_train_invalid) ... ok
+test_flip_horizontal (test_solver.GenericTrainingDerivedTests.test_flip_horizontal) ... ok
+test_identity (test_solver.GenericTrainingDerivedTests.test_identity) ... ok
+test_multiple_test_inputs_and_outputs (test_solver.GenericTrainingDerivedTests.test_multiple_test_inputs_and_outputs) ... ok
+test_no_task_id_dependency (test_solver.GenericTrainingDerivedTests.test_no_task_id_dependency) ... ok
+test_rejects_leaked_test_output (test_solver.GenericTrainingDerivedTests.test_rejects_leaked_test_output) ... ok
+test_rejects_malformed_grid_and_out_of_range (test_solver.GenericTrainingDerivedTests.test_rejects_malformed_grid_and_out_of_range) ... ok
+test_rotate_90 (test_solver.GenericTrainingDerivedTests.test_rotate_90) ... ok
+test_tiling_2x2 (test_solver.GenericTrainingDerivedTests.test_tiling_2x2) ... ok
+test_candidate_invalid_on_second_grid_never_selected_on_first (test_task_level_strategy.TaskLevelConsistencyTests.test_candidate_invalid_on_second_grid_never_selected_on_first) ... ok
+test_duplicate_candidate_sequences_do_not_consume_two_attempts (test_task_level_strategy.TaskLevelConsistencyTests.test_duplicate_candidate_sequences_do_not_consume_two_attempts) ... ok
+test_no_candidate_valid_across_entire_task_falls_back_consistently (test_task_level_strategy.TaskLevelConsistencyTests.test_no_candidate_valid_across_entire_task_falls_back_consistently) ... ok
+
+----------------------------------------------------------------------
+Ran 25 tests in 0.016s
+
+OK

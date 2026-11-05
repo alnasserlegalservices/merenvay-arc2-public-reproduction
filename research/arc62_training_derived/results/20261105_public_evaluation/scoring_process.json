@@ -1,0 +1,23 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-B",
+    "/workspace/scratch/arc62_matt_20261105/method/research/arc62_training_derived/evaluate_public.py",
+    "score",
+    "--dataset",
+    "/workspace/scratch/arc62_matt_20261105/data",
+    "--manifest",
+    "/workspace/scratch/arc62_matt_20261105/method/research/arc62_training_derived/results/20261105_public_evaluation/frozen_manifest.json",
+    "--manifest-sha256",
+    "d5f3bb03cbcbad6a2cc76376e9c4181a881e36376a6bea7e6f4589c915ccbba1",
+    "--result",
+    "/workspace/scratch/arc62_matt_20261105/method/research/arc62_training_derived/results/20261105_public_evaluation/score.json"
+  ],
+  "cwd": "/workspace/scratch/arc62_matt_20261105/method/research/arc62_training_derived",
+  "elapsed_seconds": 0.19414444199355785,
+  "finished_utc": "2026-11-05T18:01:59.058228+00:00",
+  "returncode": 0,
+  "started_utc": "2026-11-05T18:01:58.864088+00:00",
+  "stderr": "",
+  "stdout": "SCORED 120 tasks / 167 test outputs\n"
+}

@@ -1,0 +1,20 @@
+{
+  "review_kind": "Independent recomputation from frozen predictions; no solver rerun",
+  "reviewed_utc": "2026-11-05T18:05:07.666439+00:00",
+  "task_count": 120,
+  "test_outputs": 167,
+  "attempt_limit": 2,
+  "correct_outputs": 0,
+  "all_test_correct_tasks": 0,
+  "task_mean_percent": 0.0,
+  "output_weighted_percent": 0.0,
+  "prediction_sha256": "d3bb5745077d6c638b626ad1220e7eab31d25c89e771dc1256c6b0fbada2de83",
+  "manifest_sha256": "d5f3bb03cbcbad6a2cc76376e9c4181a881e36376a6bea7e6f4589c915ccbba1",
+  "score_sha256": "aff5edcc9d287b4234b128a3763e47b59c2fb44750a7440bfd226ebd8f251072",
+  "source_sha256": "37084696d0040d26ce08fc3d18e0cea20f78436152abb4ba59b9a24add01e769",
+  "dataset_commit": "f3283f727488ad98fe575ea6a5ac981e4a188e49",
+  "projection_test_labels_absent": true,
+  "all_per_test_score_flags_match": true,
+  "official_score_verification": false,
+  "human_independent_audit": false
+}
