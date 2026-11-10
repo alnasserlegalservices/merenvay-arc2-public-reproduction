@@ -1,0 +1,52 @@
+{
+  "task": "0c786b71",
+  "origin": "excerpt of the clean replay trace",
+  "parent": {
+    "id": 21,
+    "program": [
+      {
+        "axis": "h",
+        "op": "mirror_concat",
+        "order": "before"
+      }
+    ],
+    "origin": {
+      "family": "mirror",
+      "type": "seed"
+    },
+    "mismatches_per_training_pair": [
+      36,
+      36,
+      36
+    ]
+  },
+  "selected_repair": {
+    "id": 24,
+    "program": [
+      {
+        "axis": "h",
+        "op": "mirror_concat",
+        "order": "before"
+      },
+      {
+        "axis": "v",
+        "op": "mirror_concat",
+        "order": "before"
+      }
+    ],
+    "origin": {
+      "derivation": "output doubles one predicted dimension",
+      "n_residual_cells": 36,
+      "pair": 0,
+      "parent_id": 21,
+      "type": "residual"
+    },
+    "mismatches_per_training_pair": [
+      0,
+      0,
+      0
+    ]
+  },
+  "correct_test_outputs_with_feedback": 1,
+  "correct_test_outputs_without_feedback": 0
+}

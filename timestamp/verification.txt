@@ -1,2 +1,0 @@
-Verification: OK
-Using configuration from /usr/ssl/openssl.cnf
