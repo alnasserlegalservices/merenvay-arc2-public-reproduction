@@ -1,0 +1,39 @@
+{
+  "arms": {
+    "feedback": {
+      "apply_step_total": 29051,
+      "byte_identical_predictions": true,
+      "child_prefilter_apply_step": 3553,
+      "frozen_predictions_sha256": "e6f0c64b4fb409b30b2c7eb9a9e73fb5e03669c9c6c0e815e21c3abe70bed17b",
+      "run_path_apply_step": 25498,
+      "tasks": 40
+    },
+    "no_feedback": {
+      "apply_step_total": 25296,
+      "byte_identical_predictions": true,
+      "child_prefilter_apply_step": 0,
+      "frozen_predictions_sha256": "32b0d1cad9977bb1a2fc6f48c5867da1dab4d125dadec35f7c995dbfc5fb522e",
+      "run_path_apply_step": 25296,
+      "tasks": 40
+    }
+  },
+  "extra_feedback_apply_step_calls": 3755,
+  "extra_feedback_calls_percent_of_no_feedback": 14.844,
+  "frozen_hashes_verified": {
+    "code_hashes": 4,
+    "frozen_file_hashes": 4,
+    "input_manifest_challenge_and_prereg": true,
+    "original_prediction_freeze_sha256": "3aab7888eda77625b3d51decb60879a531145a38f4d187533293cb193b623e59"
+  },
+  "limitations": [
+    "A Python call count is not CPU time or cell-operation cost.",
+    "Residual scans, component analysis and other work are not measured.",
+    "The replay cannot prove the original run's chronology or number of prior runs."
+  ],
+  "scope": "Post hoc instrumented replay, not a preregistered run or compute-equivalence test",
+  "source": {
+    "directory_name": "object_feedback",
+    "type": "directory"
+  },
+  "test_answer_entries_opened": false
+}
