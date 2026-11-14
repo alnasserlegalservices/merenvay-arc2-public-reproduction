@@ -1,0 +1,113 @@
+{
+  "arms": {
+    "baseline": "pinned symbolic grammar, vendor/generic_solver.py SHA-256 37084696d0040d26ce08fc3d18e0cea20f78436152abb4ba59b9a24add01e769 (upstream commit 7a89d10f82cb5d6767a35c8db9017437cd0b3081), run through the v1 instrumented wrapper",
+    "feedback": "identical seeds and identical random-restart sampler; additionally, after a candidate fails on a training pair, derives child programs from that pair's cell residuals and tries them before the sampler",
+    "no_feedback": "new object-level generator: first-demonstration seeds, then seeded random restarts over the SAME parameter family; never reads residuals to build candidates"
+  },
+  "budgets_per_task": {
+    "accounting": "candidates = programs evaluated on training pairs; checks = single-pair applications. Same caps for every arm. Wall-clock and primitive-step counts are reported separately; caps do not prove equal CPU time.",
+    "max_attempts_per_test_input": 2,
+    "max_candidates": 128,
+    "max_checks": 1024
+  },
+  "claims_not_made": [
+    "No competition or leaderboard score",
+    "No hidden-set generalization",
+    "No equal-compute guarantee",
+    "No claim of novelty beyond the narrow residual-to-program derivations listed"
+  ],
+  "created_utc": "2026-11-10T16:51:26Z",
+  "dataset": "arcprize/ARC-AGI-2",
+  "disclosures": [
+    "Solver, fixtures and harness are written by an Anthropic model (Claude) at the user's request.",
+    "The operator set was chosen from general ARC knowledge, which includes familiarity with public ARC-1 tasks that also appear in the ARC-AGI-2 training split; the dev sample is therefore NOT held out from the designer's or any model's prior knowledge.",
+    "No task-specific prompts, solutions or hints are used at inference. No LLM, network or randomness beyond the recorded seed at inference."
+  ],
+  "experiment": "MERENVAY E-RNA v2: object-level residual-feedback probe, development sample",
+  "metrics": {
+    "inference_rule": "No significance claim. If fewer than 10 tasks are discordant between feedback and no_feedback, report counts only and state that the comparison is uninformative.",
+    "primary": [
+      "exact test outputs (pass@2) per arm",
+      "fully solved tasks per arm",
+      "paired discordance feedback vs no_feedback (tasks solved by one arm only)"
+    ],
+    "secondary": [
+      "accepted programs whose provenance includes a residual-derived step",
+      "candidates, checks, wall-clock per arm",
+      "at least 3 diagnosed failures"
+    ]
+  },
+  "program_family": {
+    "max_steps": 2,
+    "object_definition": "connected components, 4-connectivity same color for recolor; 8-connectivity multicolor non-background for crop",
+    "operators": [
+      "identity",
+      "colormap",
+      "translate_color",
+      "gravity",
+      "flip_rotate",
+      "crop_selector",
+      "fill_enclosed",
+      "recolor_objects_by_attribute",
+      "upscale",
+      "tile",
+      "mirror_concat"
+    ],
+    "residual_derivations": [
+      "post-composed color map from functional predicted->expected color change",
+      "fill_enclosed color from background-to-color residuals",
+      "recolor_objects_by_attribute mapping from per-object consistent target colors",
+      "translation offset from displacement residual",
+      "upscale/tile/mirror_concat/crop from output-shape ratio mismatch"
+    ]
+  },
+  "revision": "f3283f727488ad98fe575ea6a5ac981e4a188e49",
+  "run_policy": "Solver code is developed and unit-tested on procedurally built synthetic fixtures only. Exactly ONE scored run on these 40 tasks. Crash-only fixes after that run are allowed and must be logged as deviations; any other change makes a new version that needs a new, fresh sample.",
+  "seed": 0,
+  "selection_rule": "first 40 IDs of the 1000 data/training IDs, sorted bytewise (LC_ALL=C), taken from the git tree listing only (no blobs read)",
+  "separation_from_v1": "The 24 ARC-AGI-2 public-evaluation tasks of the v1 probe are never used here for development or tuning.",
+  "split": "data/training",
+  "status": "FROZEN BEFORE ANY SOLVER CODE WAS WRITTEN AND BEFORE ANY DEV TASK CONTENT WAS READ",
+  "task_ids": [
+    "00576224",
+    "007bbfb7",
+    "009d5c81",
+    "00d62c1b",
+    "00dbd492",
+    "017c7c7b",
+    "025d127b",
+    "03560426",
+    "045e512c",
+    "0520fde7",
+    "05269061",
+    "05a7bcf2",
+    "05f2a901",
+    "0607ce86",
+    "0692e18c",
+    "06df4c85",
+    "070dd51e",
+    "08ed6ac7",
+    "09629e4f",
+    "0962bcdd",
+    "09c534e7",
+    "0a1d4ef5",
+    "0a2355a6",
+    "0a938d79",
+    "0b148d64",
+    "0b17323b",
+    "0bb8deee",
+    "0becf7df",
+    "0c786b71",
+    "0c9aba6e",
+    "0ca9ddb6",
+    "0d3d703e",
+    "0d87d2a6",
+    "0e206a2e",
+    "0e671a1a",
+    "0f63c0b9",
+    "103eff5b",
+    "10fcaaa3",
+    "11852cab",
+    "1190bc91"
+  ]
+}

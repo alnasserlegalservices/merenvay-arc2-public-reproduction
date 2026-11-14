@@ -1,0 +1,6 @@
+operators in sampler: 16 | exact per-draw probability: 1/4096
+Monte Carlo: 600000 draws, 152 matched all training pairs, distinct matching programs: 2
+   79 [{"axis": "h", "op": "mirror_concat", "order": "before"}, {"axis": "v", "op": "mirror_concat", "order": "before"}]
+   73 [{"axis": "v", "op": "mirror_concat", "order": "before"}, {"axis": "h", "op": "mirror_concat", "order": "before"}]
+no_feedback arm sampler draws on this task: 153
+P(at least one matching draw in those draws) = 0.0367

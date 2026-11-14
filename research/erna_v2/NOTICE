@@ -1,0 +1,18 @@
+MERENVAY E-RNA v2 development probe
+Project publication: Mohammed Al Nasser, 2026.
+Source and documentation were developed with model assistance as disclosed in README.md.
+
+Includes 40 unmodified tasks from ARC-AGI-2:
+Copyright 2019 ARC Prize Foundation.
+Upstream: https://github.com/arcprize/ARC-AGI-2
+Pinned dataset commit: f3283f727488ad98fe575ea6a5ac981e4a188e49
+License: Apache License, Version 2.0.
+The original license is included in LICENSES/ARC-AGI-2-Apache-2.0.txt.
+Challenge-only and answer-only projections reorganize fields of those tasks.
+
+The independent symbolic baseline is retained unchanged from
+alnasserlegalservices/merenvay-arc2-public-reproduction,
+commit 7a89d10f82cb5d6767a35c8db9017437cd0b3081.
+Its source SHA-256 is 37084696d0040d26ce08fc3d18e0cea20f78436152abb4ba59b9a24add01e769.
+It does not import or run Mentova. The historical root NOTICE for a Mentova
+patch is not a licensing basis for this standalone E-RNA release.
